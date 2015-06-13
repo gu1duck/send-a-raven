@@ -13,6 +13,9 @@
 		3FE15C0D1B2B8C46008E84FB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C0C1B2B8C46008E84FB /* Images.xcassets */; };
 		3FE15C101B2B8C46008E84FB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C0E1B2B8C46008E84FB /* LaunchScreen.xib */; };
 		3FE15C1C1B2B8C46008E84FB /* SendARavenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C1B1B2B8C46008E84FB /* SendARavenTests.swift */; };
+		3FE15C261B2B92C0008E84FB /* ChatviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C251B2B92C0008E84FB /* ChatviewTableViewController.swift */; };
+		3FE15C281B2B9319008E84FB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C271B2B9319008E84FB /* Message.swift */; };
+		3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		3FE15C151B2B8C46008E84FB /* SendARavenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SendARavenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FE15C1A1B2B8C46008E84FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FE15C1B1B2B8C46008E84FB /* SendARavenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendARavenTests.swift; sourceTree = "<group>"; };
+		3FE15C251B2B92C0008E84FB /* ChatviewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatviewTableViewController.swift; sourceTree = "<group>"; };
+		3FE15C271B2B9319008E84FB /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,8 +83,11 @@
 		3FE15C021B2B8C46008E84FB /* SendARaven */ = {
 			isa = PBXGroup;
 			children = (
+				3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */,
 				3FE15C051B2B8C46008E84FB /* AppDelegate.swift */,
 				3FE15C071B2B8C46008E84FB /* ViewController.swift */,
+				3FE15C251B2B92C0008E84FB /* ChatviewTableViewController.swift */,
+				3FE15C271B2B9319008E84FB /* Message.swift */,
 				3FE15C091B2B8C46008E84FB /* Main.storyboard */,
 				3FE15C0C1B2B8C46008E84FB /* Images.xcassets */,
 				3FE15C0E1B2B8C46008E84FB /* LaunchScreen.xib */,
@@ -212,6 +221,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FE15C261B2B92C0008E84FB /* ChatviewTableViewController.swift in Sources */,
+				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
+				3FE15C281B2B9319008E84FB /* Message.swift in Sources */,
 				3FE15C081B2B8C46008E84FB /* ViewController.swift in Sources */,
 				3FE15C061B2B8C46008E84FB /* AppDelegate.swift in Sources */,
 			);
