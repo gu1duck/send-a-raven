@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F884DC21B2BC1580016104E /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F884DC11B2BC1580016104E /* ChatViewController.swift */; };
 		3FE15C061B2B8C46008E84FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C051B2B8C46008E84FB /* AppDelegate.swift */; };
-		3FE15C081B2B8C46008E84FB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C071B2B8C46008E84FB /* ViewController.swift */; };
 		3FE15C0B1B2B8C46008E84FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C091B2B8C46008E84FB /* Main.storyboard */; };
 		3FE15C0D1B2B8C46008E84FB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C0C1B2B8C46008E84FB /* Images.xcassets */; };
 		3FE15C101B2B8C46008E84FB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C0E1B2B8C46008E84FB /* LaunchScreen.xib */; };
@@ -29,10 +29,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F884DC11B2BC1580016104E /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3FE15C001B2B8C46008E84FB /* SendARaven.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendARaven.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FE15C041B2B8C46008E84FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FE15C051B2B8C46008E84FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3FE15C071B2B8C46008E84FB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3FE15C0A1B2B8C46008E84FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3FE15C0C1B2B8C46008E84FB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3FE15C0F1B2B8C46008E84FB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -85,10 +85,10 @@
 			children = (
 				3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */,
 				3FE15C051B2B8C46008E84FB /* AppDelegate.swift */,
-				3FE15C071B2B8C46008E84FB /* ViewController.swift */,
 				3FE15C251B2B92C0008E84FB /* ChatviewTableViewController.swift */,
 				3FE15C271B2B9319008E84FB /* Message.swift */,
 				3FE15C091B2B8C46008E84FB /* Main.storyboard */,
+				3F884DC11B2BC1580016104E /* ChatViewController.swift */,
 				3FE15C0C1B2B8C46008E84FB /* Images.xcassets */,
 				3FE15C0E1B2B8C46008E84FB /* LaunchScreen.xib */,
 				3FE15C031B2B8C46008E84FB /* Supporting Files */,
@@ -224,7 +224,7 @@
 				3FE15C261B2B92C0008E84FB /* ChatviewTableViewController.swift in Sources */,
 				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
 				3FE15C281B2B9319008E84FB /* Message.swift in Sources */,
-				3FE15C081B2B8C46008E84FB /* ViewController.swift in Sources */,
+				3F884DC21B2BC1580016104E /* ChatViewController.swift in Sources */,
 				3FE15C061B2B8C46008E84FB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +423,7 @@
 				3FE15C211B2B8C46008E84FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FE15C221B2B8C46008E84FB /* Build configuration list for PBXNativeTarget "SendARavenTests" */ = {
 			isa = XCConfigurationList;
@@ -431,6 +432,7 @@
 				3FE15C241B2B8C46008E84FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

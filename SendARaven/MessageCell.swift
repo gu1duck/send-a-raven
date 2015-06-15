@@ -43,7 +43,9 @@ class MessageCell: UITableViewCell {
             attribute: NSLayoutAttribute.Width,
             multiplier: 0.6,
             constant: 0.0))
-        contentView.removeConstraint(contentCenterConstraint)
+        if (contentCenterConstraint != nil){
+            contentView.removeConstraint(contentCenterConstraint)
+        }
         
         if message.sender == "me"{
             contentContainer.backgroundColor = UIColor.purpleColor()
@@ -69,7 +71,8 @@ class MessageCell: UITableViewCell {
                 multiplier: 1.0,
                 constant: 0.0))
         }
-        contentView.updateConstraints()
+        //contentView.updateConstraints()
+        contentView.layoutIfNeeded()
     }
     
 }
