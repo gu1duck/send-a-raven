@@ -16,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Enable local Parse datastore
@@ -29,13 +28,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if let dict = keys {
-            let applicationId = keys?["applictionId"] as? String
+            let applicationId = keys?["applicationID"] as? String
             let clientKey = keys?["clientKey"] as? String
             
             // Initialize Parse.
             Parse.setApplicationId(applicationId!,
                 clientKey:clientKey!)
         }
+        
+//        let testObject = PFObject(className: "TestObject")
+//        testObject["foo"] = "bar"
+//        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+//            println("Object has been saved.")
+//        }
         
         return true
     }
