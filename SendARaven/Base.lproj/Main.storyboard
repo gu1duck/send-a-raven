@@ -109,16 +109,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TimeStamp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grf-TZ-Dug">
-                                                    <rect key="frame" x="268" y="8" width="64" height="14.5"/>
+                                                    <rect key="frame" x="268" y="0.0" width="64" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hwW-MH-AbA" userLabel="ContentContainer">
-                                                    <rect key="frame" x="271" y="28" width="59" height="30"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwW-MH-AbA" userLabel="ContentContainer">
+                                                    <rect key="frame" x="271" y="20" width="59" height="50"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="op5-g7-SIx">
-                                                            <rect key="frame" x="8" y="6" width="43" height="18"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="op5-g7-SIx">
+                                                            <rect key="frame" x="8" y="6" width="43" height="38"/>
                                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -135,10 +135,10 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="centerX" secondItem="grf-TZ-Dug" secondAttribute="centerX" id="2M5-au-6oN"/>
-                                                <constraint firstItem="grf-TZ-Dug" firstAttribute="top" secondItem="8t0-qN-Iu7" secondAttribute="topMargin" id="A83-MP-Bff"/>
-                                                <constraint firstItem="hwW-MH-AbA" firstAttribute="top" secondItem="8t0-qN-Iu7" secondAttribute="topMargin" constant="20" id="KKo-Y3-TiL"/>
+                                                <constraint firstItem="grf-TZ-Dug" firstAttribute="top" secondItem="8t0-qN-Iu7" secondAttribute="top" id="A83-MP-Bff"/>
+                                                <constraint firstItem="hwW-MH-AbA" firstAttribute="top" secondItem="8t0-qN-Iu7" secondAttribute="top" constant="20" id="KKo-Y3-TiL"/>
                                                 <constraint firstAttribute="centerX" secondItem="hwW-MH-AbA" secondAttribute="centerX" id="Z1T-MP-NP0"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="hwW-MH-AbA" secondAttribute="bottom" id="xeB-7L-W0z"/>
+                                                <constraint firstAttribute="bottom" secondItem="hwW-MH-AbA" secondAttribute="bottom" constant="4" id="xeB-7L-W0z"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>

@@ -8,6 +8,9 @@
 
 import UIKit
 
+import Parse
+import Bolts
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -15,7 +18,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // Enable local Parse datastore
+        Parse.enableLocalDatastore()
+        
+        //Retrieve hidden API keys
+        var keys:NSDictionary?
+        if let path = NSBundle.mainBundle().pathForResource("parseKeys", ofType: "plist"){
+            keys = NSDictionary(contentsOfFile:path)
+        }
+        
+        if let dict = keys {
+            let applicationId = keys?["applictionId"] as? String
+            let clientKey = keys?["clientKey"] as? String
+            
+            // Initialize Parse.
+            Parse.setApplicationId(applicationId!,
+                clientKey:clientKey!)
+        }
+        
         return true
     }
 

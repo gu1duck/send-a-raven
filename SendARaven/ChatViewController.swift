@@ -190,9 +190,6 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         self.textField.resignFirstResponder()
     }
     
-
-    
-    
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 50;
     }
