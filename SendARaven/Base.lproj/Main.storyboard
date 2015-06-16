@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Iz4-UD-xUM">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -21,10 +23,10 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
-        <!--Table View Controller-->
+        <!--Index View Controller-->
         <scene sceneID="cIJ-Co-VcY">
             <objects>
-                <tableViewController id="Iz4-UD-xUM" sceneMemberID="viewController">
+                <tableViewController id="Iz4-UD-xUM" customClass="IndexViewController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9aW-WM-862">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -46,6 +48,78 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UNb-IX-iwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="259" y="1013"/>
+        </scene>
+        <!--Pick Location View Controller-->
+        <scene sceneID="6FR-2w-6Jj">
+            <objects>
+                <viewController storyboardIdentifier="locationPicker" id="qi0-Vq-o9M" customClass="PickLocationViewController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="T4k-ug-bJQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="702-Qv-9nz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oj3-ae-Eit">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="e6J-eI-SWu">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                            </mapView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNr-9Z-Lbg">
+                                <rect key="frame" x="16" y="400" width="568" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBH-Qo-ELW">
+                                <rect key="frame" x="16" y="308" width="568" height="84"/>
+                                <string key="text">To you need to set up a rookery to use the app. Your rookery is where people will send you messages and where you will need to go to retrieve them.  
+
+It is publicly visible, so it probably shouldn’t be your home. Go there, open this screen and hit OK.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfQ-Qt-7on">
+                                <rect key="frame" x="230" y="550" width="140" height="30"/>
+                                <state key="normal" title="Ok, use this location"/>
+                                <connections>
+                                    <action selector="okButton:" destination="qi0-Vq-o9M" eventType="touchUpInside" id="fro-iO-VgV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="e6J-eI-SWu" firstAttribute="height" secondItem="oj3-ae-Eit" secondAttribute="height" multiplier="1/2" id="0Hm-Tg-JdE"/>
+                            <constraint firstItem="e6J-eI-SWu" firstAttribute="top" secondItem="oj3-ae-Eit" secondAttribute="topMargin" id="2yv-Lm-Pnu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oBH-Qo-ELW" secondAttribute="trailing" id="3VG-ks-R6n"/>
+                            <constraint firstItem="oBH-Qo-ELW" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leadingMargin" id="7ux-s4-AUI"/>
+                            <constraint firstAttribute="centerX" secondItem="kNr-9Z-Lbg" secondAttribute="centerX" id="DC2-Pc-bWQ"/>
+                            <constraint firstAttribute="centerX" secondItem="kfQ-Qt-7on" secondAttribute="centerX" id="HKA-7F-LJf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kNr-9Z-Lbg" secondAttribute="trailing" id="akn-v0-ymd"/>
+                            <constraint firstItem="oBH-Qo-ELW" firstAttribute="top" secondItem="e6J-eI-SWu" secondAttribute="bottom" constant="8" id="gsn-bg-wFV"/>
+                            <constraint firstItem="702-Qv-9nz" firstAttribute="top" secondItem="e6J-eI-SWu" secondAttribute="bottom" id="pOy-Mw-etr"/>
+                            <constraint firstItem="kNr-9Z-Lbg" firstAttribute="top" secondItem="oBH-Qo-ELW" secondAttribute="bottom" constant="8" id="qkG-cV-nfz"/>
+                            <constraint firstAttribute="centerY" secondItem="kNr-9Z-Lbg" secondAttribute="centerY" multiplier="2/3" id="qsM-sn-DXo"/>
+                            <constraint firstItem="kNr-9Z-Lbg" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leadingMargin" id="rSq-xT-Y1T"/>
+                            <constraint firstItem="702-Qv-9nz" firstAttribute="top" secondItem="kfQ-Qt-7on" secondAttribute="bottom" constant="20" id="wQe-xs-tAi"/>
+                            <constraint firstAttribute="trailing" secondItem="e6J-eI-SWu" secondAttribute="trailing" id="xre-mG-jEu"/>
+                            <constraint firstItem="e6J-eI-SWu" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leading" id="yXc-Dh-C3m"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="qsM-sn-DXo"/>
+                                <exclude reference="pOy-Mw-etr"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="locationLabel" destination="kNr-9Z-Lbg" id="CZT-eP-5ch"/>
+                        <outlet property="mapView" destination="e6J-eI-SWu" id="Cuy-a1-9bM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ine-Fh-06s" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="346" y="2034"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="rSp-QJ-u6D">

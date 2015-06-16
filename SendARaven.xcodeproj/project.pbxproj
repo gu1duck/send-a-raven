@@ -34,6 +34,12 @@
 		3FE15C261B2B92C0008E84FB /* ChatviewTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C251B2B92C0008E84FB /* ChatviewTableViewController.swift */; };
 		3FE15C281B2B9319008E84FB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C271B2B9319008E84FB /* Message.swift */; };
 		3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */; };
+		3FFF4C901B2F818A00670ACD /* IndexViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */; };
+		3FFF4C921B2F845C00670ACD /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFF4C911B2F845C00670ACD /* Social.framework */; };
+		3FFF4C941B2F846800670ACD /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFF4C931B2F846800670ACD /* Accounts.framework */; };
+		3FFF4C961B2FA12600670ACD /* PickLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */; };
+		3FFF4C981B2FA2B500670ACD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FFF4C971B2FA2B500670ACD /* MapKit.framework */; };
+		3FFF4C9A1B2FA3D700670ACD /* victoria.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3FFF4C991B2FA3D700670ACD /* victoria.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +84,12 @@
 		3FE15C251B2B92C0008E84FB /* ChatviewTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatviewTableViewController.swift; sourceTree = "<group>"; };
 		3FE15C271B2B9319008E84FB /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexViewController.swift; sourceTree = "<group>"; };
+		3FFF4C911B2F845C00670ACD /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		3FFF4C931B2F846800670ACD /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickLocationViewController.swift; sourceTree = "<group>"; };
+		3FFF4C971B2FA2B500670ACD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3FFF4C991B2FA3D700670ACD /* victoria.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = victoria.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +97,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FFF4C981B2FA2B500670ACD /* MapKit.framework in Frameworks */,
+				3F884DD71B2F5B870016104E /* CoreLocation.framework in Frameworks */,
+				3FFF4C941B2F846800670ACD /* Accounts.framework in Frameworks */,
+				3FFF4C921B2F845C00670ACD /* Social.framework in Frameworks */,
 				3F884DE51B2F5BD90016104E /* libsqlite3.dylib in Frameworks */,
 				3F884DE31B2F5BC70016104E /* libz.dylib in Frameworks */,
 				3F884DE11B2F5BBA0016104E /* SystemConfiguration.framework in Frameworks */,
@@ -92,7 +108,6 @@
 				3F884DDD1B2F5BA90016104E /* Security.framework in Frameworks */,
 				3F884DDB1B2F5B9D0016104E /* QuartzCore.framework in Frameworks */,
 				3F884DD91B2F5B940016104E /* MobileCoreServices.framework in Frameworks */,
-				3F884DD71B2F5B870016104E /* CoreLocation.framework in Frameworks */,
 				3F884DD51B2F5B800016104E /* CoreGraphics.framework in Frameworks */,
 				3F884DD31B2F5B750016104E /* CFNetwork.framework in Frameworks */,
 				3F884DD11B2F5B6E0016104E /* AudioToolbox.framework in Frameworks */,
@@ -120,6 +135,9 @@
 			children = (
 				3F884DE41B2F5BD90016104E /* libsqlite3.dylib */,
 				3F884DE21B2F5BC60016104E /* libz.dylib */,
+				3FFF4C971B2FA2B500670ACD /* MapKit.framework */,
+				3FFF4C931B2F846800670ACD /* Accounts.framework */,
+				3FFF4C911B2F845C00670ACD /* Social.framework */,
 				3F884DE01B2F5BBA0016104E /* SystemConfiguration.framework */,
 				3F884DDE1B2F5BB00016104E /* StoreKit.framework */,
 				3F884DDC1B2F5BA90016104E /* Security.framework */,
@@ -162,6 +180,8 @@
 			children = (
 				3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */,
 				3FE15C051B2B8C46008E84FB /* AppDelegate.swift */,
+				3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */,
+				3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */,
 				3FE15C251B2B92C0008E84FB /* ChatviewTableViewController.swift */,
 				3FE15C271B2B9319008E84FB /* Message.swift */,
 				3FE15C091B2B8C46008E84FB /* Main.storyboard */,
@@ -177,6 +197,7 @@
 		3FE15C031B2B8C46008E84FB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3FFF4C991B2FA3D700670ACD /* victoria.gpx */,
 				3F884DE61B2F61B50016104E /* parseKeys.plist */,
 				3FE15C041B2B8C46008E84FB /* Info.plist */,
 			);
@@ -282,6 +303,7 @@
 			files = (
 				3F884DE71B2F61B50016104E /* parseKeys.plist in Resources */,
 				3FE15C0B1B2B8C46008E84FB /* Main.storyboard in Resources */,
+				3FFF4C9A1B2FA3D700670ACD /* victoria.gpx in Resources */,
 				3FE15C101B2B8C46008E84FB /* LaunchScreen.xib in Resources */,
 				3FE15C0D1B2B8C46008E84FB /* Images.xcassets in Resources */,
 			);
@@ -304,8 +326,10 @@
 				3FE15C261B2B92C0008E84FB /* ChatviewTableViewController.swift in Sources */,
 				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
 				3FE15C281B2B9319008E84FB /* Message.swift in Sources */,
+				3FFF4C961B2FA12600670ACD /* PickLocationViewController.swift in Sources */,
 				3F884DC21B2BC1580016104E /* ChatViewController.swift in Sources */,
 				3FE15C061B2B8C46008E84FB /* AppDelegate.swift in Sources */,
+				3FFF4C901B2F818A00670ACD /* IndexViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
