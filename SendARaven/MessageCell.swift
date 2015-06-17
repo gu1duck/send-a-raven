@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class MessageCell: UITableViewCell {
 
@@ -14,6 +15,8 @@ class MessageCell: UITableViewCell {
     @IBOutlet weak var timeStampLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var contentCenterConstraint: NSLayoutConstraint!
+    
+    var extraConstraint: NSLayoutConstraint?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,7 +35,7 @@ class MessageCell: UITableViewCell {
         
         let dateFormatter = NSDateFormatter()
         //timeStampLabel.text = dateFormatter.stringFromDate(message.timeStamp)
-        contentLabel.text = message.content
+        contentLabel.text = message.postContent
         contentContainer.layer.cornerRadius = 15
         
         contentView.addConstraint(NSLayoutConstraint(
@@ -43,36 +46,49 @@ class MessageCell: UITableViewCell {
             attribute: NSLayoutAttribute.Width,
             multiplier: 0.6,
             constant: 0.0))
+        
         if (contentCenterConstraint != nil){
             contentView.removeConstraint(contentCenterConstraint)
         }
         
-        if message.sender == "me"{
+        if message.postUsers.first == PFUser.currentUser(){
             contentContainer.backgroundColor = UIColor.purpleColor()
             
-            contentView.addConstraint(NSLayoutConstraint(
+            let rightConstraint = NSLayoutConstraint(
                 item: contentContainer,
                 attribute: NSLayoutAttribute.Right,
                 relatedBy: NSLayoutRelation.Equal,
                 toItem: contentView,
                 attribute: NSLayoutAttribute.RightMargin,
                 multiplier: 1.0,
-                constant: 0.0))
+                constant: 0.0)
+            
+            contentView.addConstraint(rightConstraint)
+            extraConstraint = rightConstraint
             
         } else {
+            
             contentContainer.backgroundColor = UIColor.lightGrayColor()
             
-            contentView.addConstraint(NSLayoutConstraint(
+            let leftConstraint = NSLayoutConstraint(
                 item: contentContainer,
                 attribute: NSLayoutAttribute.Left,
                 relatedBy: NSLayoutRelation.Equal,
                 toItem: contentView,
                 attribute: NSLayoutAttribute.LeftMargin,
                 multiplier: 1.0,
-                constant: 0.0))
+                constant: 0.0)
+            contentView.addConstraint(leftConstraint)
+            extraConstraint = leftConstraint
         }
-        //contentView.updateConstraints()
-        contentView.layoutIfNeeded()
+        contentView.updateConstraints()
+        //contentView.layoutIfNeeded()
+    }
+    
+    override func prepareForReuse() {
+        if extraConstraint != nil {
+            contentView.removeConstraint(extraConstraint!)
+        }
     }
     
 }

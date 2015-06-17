@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Parse
 
 class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     
@@ -17,14 +18,13 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     @IBOutlet weak var buttonRightMargin: NSLayoutConstraint!
     
     @IBOutlet weak var textHeight: NSLayoutConstraint!
-    var textContentSize = CGSizeZero
     var textViewIsEmpty = true
     let notificationCenter = NSNotificationCenter.defaultCenter()
     let kTextInputHeight = 56.0
-
     
-    let messages = [ Message(content: "Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore, While I nodded, nearly napping, suddenly there came a tapping, As of someone gently rapping, rapping at my chamber door.\"Tis some visitor,\" I muttered, \"tapping at my chamber door; Only this, and nothing more.\"", timeStamp: NSDate(), sender: "you"),
-        Message(content: "Message one", timeStamp: NSDate(), sender: "me") ]
+    var messages = [Message]()
+    
+    var otherUser: PFUser?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +32,52 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.contentInset = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
+        
+            var query = PFUser.query()
+            query?.whereKey("username", equalTo: "user1")
+            query?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+                if let queryUser = results!.first as? PFUser{
+                    self.otherUser = queryUser
+                    
+                    var messageQuery = Message.query()
+                    
+                    messageQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
+                    messageQuery?.orderByDescending("timeStamp")
+                    messageQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+                        if let messageResults = results as? [Message]{
+                            self.messages = messageResults
+                            self.tableView.reloadData()
+                        }
+                    })
+                    
+                    
+                    /*
+                    let message1 = Message()
+                    message1.postContent = "Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore, While I nodded, nearly napping, suddenly there came a tapping, As of someone gently rapping, rapping at my chamber door.\"Tis some visitor,\" I muttered, \"tapping at my chamber door; Only this, and nothing more.\""
+                    message1.timeStamp = NSDate()
+                    message1.postUsers = [PFUser.currentUser()!, self.otherUser!]
+                    message1.saveInBackground()
+                    
+                    let message2 = Message()
+                    message2.postContent = "Message one"
+                    message2.timeStamp = NSDate()
+                    message2.postUsers = [self.otherUser!, PFUser.currentUser()!]
+                    message2.saveInBackground()
+                    */
+                    
+                    
+                }
+            })
+//        }
+        
+        
+        //Text input setup
         textField.layer.cornerRadius = 10
         textField.layer.borderColor = UIColor.grayColor().CGColor
         textField.layer.borderWidth = 0.5
         submitButton.layer.cornerRadius = submitButton.frame.size.width/2
+        
+        
         
         
         
@@ -187,7 +229,19 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     }
     
     @IBAction func submitMessage(sender: AnyObject) {
+        textField.editable = false
+        submitButton.enabled = false
+        let message = Message()
+        message.postContent = textField.text
+        message.timeStamp = NSDate()
+        message.postUsers = [PFUser.currentUser()!, self.otherUser!]
+        message.saveInBackground()
+        messages = [message] + messages
+        tableView.reloadData()
         self.textField.resignFirstResponder()
+        self.textField.text = ""
+        textField.editable = true
+        submitButton.enabled = true
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

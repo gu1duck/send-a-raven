@@ -7,16 +7,29 @@
 //
 
 import UIKit
+import Foundation
+import Parse
 
-class Message: NSObject {
-    let content: String
-    let timeStamp:NSDate
-    let sender:String
-    
-    init(content:String, timeStamp:NSDate, sender:String){
-        self.content = content
-        self.timeStamp = timeStamp
-        self.sender = sender
+
+
+
+class Message: PFObject, PFSubclassing {
+    override class func initialize() {
+        struct Static {
+            static var onceToken : dispatch_once_t = 0;
+        }
+        dispatch_once(&Static.onceToken) {
+            self.registerSubclass()
+        }
     }
+    
+    static func parseClassName() -> String {
+        return "Message"
+    }
+    
+    @NSManaged var postContent: String
+    @NSManaged var timeStamp: NSDate
+    @NSManaged var postUsers: [PFUser]
+    
 }
 
