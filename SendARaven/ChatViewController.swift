@@ -33,57 +33,39 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         tableView.contentInset = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
         
-            var query = PFUser.query()
-            query?.whereKey("username", equalTo: "user1")
-            query?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-                if let queryUser = results!.first as? PFUser{
-                    self.otherUser = queryUser
-                    
-                    var messageQuery = Message.query()
-                    
-                    messageQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
-                    messageQuery?.orderByDescending("timeStamp")
-                    messageQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-                        if let messageResults = results as? [Message]{
-                            self.messages = messageResults
-                            self.tableView.reloadData()
-                        }
-                    })
-                    
-                    
-                    /*
-                    let message1 = Message()
-                    message1.postContent = "Once upon a midnight dreary, while I pondered, weak and weary, Over many a quaint and curious volume of forgotten lore, While I nodded, nearly napping, suddenly there came a tapping, As of someone gently rapping, rapping at my chamber door.\"Tis some visitor,\" I muttered, \"tapping at my chamber door; Only this, and nothing more.\""
-                    message1.timeStamp = NSDate()
-                    message1.postUsers = [PFUser.currentUser()!, self.otherUser!]
-                    message1.saveInBackground()
-                    
-                    let message2 = Message()
-                    message2.postContent = "Message one"
-                    message2.timeStamp = NSDate()
-                    message2.postUsers = [self.otherUser!, PFUser.currentUser()!]
-                    message2.saveInBackground()
-                    */
-                    
-                    
-                }
-            })
-//        }
-        
-        
+        var query = PFUser.query()
+        query?.whereKey("username", equalTo: "user1")
+        query?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+            if let queryUser = results!.first as? PFUser{
+                self.otherUser = queryUser
+                self.updateTableViewLocallyAndRemotely()
+                
+                /*
+                var messageQuery = Message.query()
+                messageQuery?.fromLocalDatastore()
+                messageQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
+                messageQuery?.orderByDescending("timeStamp")
+                messageQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+                    if let messageResults = results as? [Message]{
+                        PFObject.pinAllInBackground(messageResults)
+                        self.messages = messageResults
+                        self.tableView.reloadData()
+                
+                    }
+                })
+                */
+            }
+        })
+       
         //Text input setup
         textField.layer.cornerRadius = 10
         textField.layer.borderColor = UIColor.grayColor().CGColor
         textField.layer.borderWidth = 0.5
         submitButton.layer.cornerRadius = submitButton.frame.size.width/2
-        
-        
-        
-        
-        
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        
+    
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
@@ -128,6 +110,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         return cell
 
     }
+    
+    //MARK TextView Methods
     
     func textViewDidBeginEditing(textView: UITextView) {
         if textField.text == "Send a message"{
@@ -189,6 +173,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         textField.scrollEnabled = true
         
     }
+    
+    //MARK: Keyboard notification methods
 
     func keyboardWillShow(notification: NSNotification) {
         let userInfo = notification.userInfo!
@@ -235,7 +221,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         message.postContent = textField.text
         message.timeStamp = NSDate()
         message.postUsers = [PFUser.currentUser()!, self.otherUser!]
-        message.saveInBackground()
+        message.pin()
+        message.saveEventually()
         messages = [message] + messages
         tableView.reloadData()
         self.textField.resignFirstResponder()
@@ -246,6 +233,37 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 50;
+    }
+    
+    func updateTableViewLocallyAndRemotely(){
+        var localQuery = Message.query()
+        localQuery?.fromLocalDatastore()
+        localQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
+        localQuery?.orderByDescending("timeStamp")
+        localQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+            if let messageResults = results as? [Message]{
+                self.messages = messageResults
+                self.tableView.reloadData()
+                self.updateTableViewWithOnlineQuery()
+            }
+        })
+    }
+    
+    func updateTableViewWithOnlineQuery(){
+        var onlineQuery = Message.query()
+        onlineQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
+        onlineQuery?.countObjectsInBackgroundWithBlock({ (count:Int32, error:NSError?) -> Void in
+            if Int(count) != self.messages.count{
+                onlineQuery?.orderByDescending("timeStamp")
+                onlineQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+                    if let messageResults = results as? [Message]{
+                        self.messages = messageResults
+                        self.tableView.reloadData()
+                        PFObject.pinAllInBackground(messageResults)
+                    }
+                })
+            }
+        })
     }
 }
 

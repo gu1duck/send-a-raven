@@ -184,10 +184,9 @@
 				3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */,
 				3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */,
 				3FE15C271B2B9319008E84FB /* Message.swift */,
-				3FFF4C9D1B30DE6400670ACD /* SendARaven-Bridging-Header.h */,
-				3FE15C091B2B8C46008E84FB /* Main.storyboard */,
 				3F884DC11B2BC1580016104E /* ChatViewController.swift */,
 				3FE15C0C1B2B8C46008E84FB /* Images.xcassets */,
+				3FE15C091B2B8C46008E84FB /* Main.storyboard */,
 				3FE15C0E1B2B8C46008E84FB /* LaunchScreen.xib */,
 				3FE15C031B2B8C46008E84FB /* Supporting Files */,
 				3F884DCF1B2F574D0016104E /* Frameworks */,
@@ -198,6 +197,7 @@
 		3FE15C031B2B8C46008E84FB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3FFF4C9D1B30DE6400670ACD /* SendARaven-Bridging-Header.h */,
 				3FFF4C9B1B30CF4400670ACD /* vancouver.gpx */,
 				3FFF4C991B2FA3D700670ACD /* victoria.gpx */,
 				3F884DE61B2F61B50016104E /* parseKeys.plist */,

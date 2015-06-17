@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Enable local Parse datastore
         Parse.enableLocalDatastore()
+        Message.registerSubclass()
         
         //Retrieve hidden API keys
         var keys:NSDictionary?
