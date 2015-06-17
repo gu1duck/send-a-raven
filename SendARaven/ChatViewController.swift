@@ -33,29 +33,17 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         tableView.contentInset = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
         
-        var query = PFUser.query()
-        query?.whereKey("username", equalTo: "user1")
-        query?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-            if let queryUser = results!.first as? PFUser{
-                self.otherUser = queryUser
-                self.updateTableViewLocallyAndRemotely()
-                
-                /*
-                var messageQuery = Message.query()
-                messageQuery?.fromLocalDatastore()
-                messageQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
-                messageQuery?.orderByDescending("timeStamp")
-                messageQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-                    if let messageResults = results as? [Message]{
-                        PFObject.pinAllInBackground(messageResults)
-                        self.messages = messageResults
-                        self.tableView.reloadData()
-                
-                    }
-                })
-                */
-            }
+//        var query = PFUser.query()
+//        query?.whereKey("username", equalTo: "user1")
+//        query?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+//            if let queryUser = results!.first as? PFUser{
+//                self.otherUser = queryUser
+        otherUser?.fetchIfNeededInBackgroundWithBlock({ (user:PFObject?, error:NSError?) -> Void in
+            self.updateTableViewLocallyAndRemotely()
         })
+        
+//            }
+//        })
        
         //Text input setup
         textField.layer.cornerRadius = 10
@@ -63,11 +51,6 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         textField.layer.borderWidth = 0.5
         submitButton.layer.cornerRadius = submitButton.frame.size.width/2
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-    
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
     override func didReceiveMemoryWarning() {

@@ -26,6 +26,7 @@
 		3F884DE31B2F5BC70016104E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F884DE21B2F5BC60016104E /* libz.dylib */; };
 		3F884DE51B2F5BD90016104E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F884DE41B2F5BD90016104E /* libsqlite3.dylib */; };
 		3F884DE71B2F61B50016104E /* parseKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F884DE61B2F61B50016104E /* parseKeys.plist */; };
+		3FC5EB881B31F0FF003D2469 /* IndexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB871B31F0FE003D2469 /* IndexCell.swift */; };
 		3FE15C061B2B8C46008E84FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C051B2B8C46008E84FB /* AppDelegate.swift */; };
 		3FE15C0B1B2B8C46008E84FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C091B2B8C46008E84FB /* Main.storyboard */; };
 		3FE15C0D1B2B8C46008E84FB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C0C1B2B8C46008E84FB /* Images.xcassets */; };
@@ -72,6 +73,7 @@
 		3F884DE21B2F5BC60016104E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3F884DE41B2F5BD90016104E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3F884DE61B2F61B50016104E /* parseKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = parseKeys.plist; sourceTree = "<group>"; };
+		3FC5EB871B31F0FE003D2469 /* IndexCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexCell.swift; sourceTree = "<group>"; };
 		3FE15C001B2B8C46008E84FB /* SendARaven.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendARaven.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FE15C041B2B8C46008E84FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FE15C051B2B8C46008E84FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 				3FE15C051B2B8C46008E84FB /* AppDelegate.swift */,
 				3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */,
 				3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */,
+				3FC5EB871B31F0FE003D2469 /* IndexCell.swift */,
 				3FE15C271B2B9319008E84FB /* Message.swift */,
 				3F884DC11B2BC1580016104E /* ChatViewController.swift */,
 				3FE15C0C1B2B8C46008E84FB /* Images.xcassets */,
@@ -331,6 +334,7 @@
 				3FFF4C961B2FA12600670ACD /* PickLocationViewController.swift in Sources */,
 				3F884DC21B2BC1580016104E /* ChatViewController.swift in Sources */,
 				3FE15C061B2B8C46008E84FB /* AppDelegate.swift in Sources */,
+				3FC5EB881B31F0FF003D2469 /* IndexCell.swift in Sources */,
 				3FFF4C901B2F818A00670ACD /* IndexViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
