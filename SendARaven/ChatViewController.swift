@@ -264,9 +264,16 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
                 onlineQuery?.orderByDescending("timeStamp")
                 onlineQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
                     if let messageResults = results as? [Message]{
-                        self.messages = messageResults
+                        var itemsToAdd = [Message]()
+                        for message in messageResults{
+                            if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
+                                itemsToAdd.append(message)
+                            }
+                        }
+                        
+                        self.messages = itemsToAdd
                         self.tableView.reloadData()
-                        PFObject.pinAllInBackground(messageResults)
+                        PFObject.pinAllInBackground(itemsToAdd)
                     }
                 })
             }

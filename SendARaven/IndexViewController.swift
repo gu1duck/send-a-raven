@@ -97,25 +97,29 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                 onlineQuery?.orderByDescending("timeStamp")
                 onlineQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
                     if let messageResults = results as? [Message]{
-                        if let messageResults = results as? [Message]{
-                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() in
-                                var partners = [PFUser]()
-                                var updatedConversations = [Message]()
-                                for message in messageResults {
-                                    let otherUser = message.otherUser()
-                                    otherUser.fetch()
-                                    if partners.contains(otherUser) == false{
-                                        partners.append(otherUser)
-                                        updatedConversations.append(message)
-                                    }
-                                }
-                                self.conversations = updatedConversations
-                                Message.pinAllInBackground(self.conversations)
-                                dispatch_async(dispatch_get_main_queue(), {() in
-                                    self.tableView.reloadData()
-                                })
-                            })
+                        var itemsToAdd = [Message]()
+                        for message in messageResults{
+                            if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
+                                itemsToAdd.append(message)
+                            }
                         }
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() in
+                            var partners = [PFUser]()
+                            var updatedConversations = [Message]()
+                            for message in itemsToAdd {
+                                let otherUser = message.otherUser()
+                                otherUser.fetch()
+                                if partners.contains(otherUser) == false{
+                                    partners.append(otherUser)
+                                    updatedConversations.append(message)
+                                }
+                            }
+                            self.conversations = updatedConversations
+                            Message.pinAllInBackground(itemsToAdd)
+                            dispatch_async(dispatch_get_main_queue(), {() in
+                                self.tableView.reloadData()
+                            })
+                        })
                     }
                 })
             }
