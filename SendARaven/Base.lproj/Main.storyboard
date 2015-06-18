@@ -82,7 +82,23 @@
                             <outlet property="delegate" destination="Iz4-UD-xUM" id="9uW-jO-BGY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="QJ1-bg-he8"/>
+                    <navigationItem key="navigationItem" id="QJ1-bg-he8">
+                        <nil key="title"/>
+                        <textField key="titleView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="username" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" id="XbR-Ze-VJK">
+                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="E3M-se-HcL">
+                            <connections>
+                                <action selector="newChat:" destination="Iz4-UD-xUM" id="1Th-qG-Fwx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="newChatField" destination="XbR-Ze-VJK" id="fyI-dl-yZx"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UNb-IX-iwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -163,7 +179,7 @@ It is publicly visible, so it probably shouldn’t be your home. Go there, open 
         <!--Chat View Controller-->
         <scene sceneID="rSp-QJ-u6D">
             <objects>
-                <viewController id="S5F-Qe-c07" customClass="ChatViewController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="chat" id="S5F-Qe-c07" customClass="ChatViewController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="avY-Zm-LdC"/>
                         <viewControllerLayoutGuide type="bottom" id="DFR-Br-kFr"/>

@@ -22,8 +22,9 @@ extension Array {
     }
 }
 
-class IndexViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate {
+class IndexViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
     
+    @IBOutlet weak var newChatField: UITextField!
     var conversations = [Message]()
     
     override func viewDidAppear(animated: Bool) {
@@ -46,7 +47,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.tableView.registerClass(IndexCell.classForCoder(), forCellReuseIdentifier: "reuseIdentifier")
+        newChatField.delegate  = self
     
         }
 
@@ -58,7 +59,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     func updateTableViewLocallyAndRemotely(){
         if let user = PFUser.currentUser(){
             var localQuery = Message.query()
-            //localQuery?.fromLocalDatastore()
+            localQuery?.fromLocalDatastore()
             localQuery?.whereKey("postUsers", containsAllObjectsInArray: [user])
             localQuery?.orderByDescending("timeStamp")
             localQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
@@ -79,28 +80,44 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                             self.tableView.reloadData()
                         })
                     })
-                    //self.updateTableViewWithOnlineQuery()
+                    self.updateTableViewWithOnlineQuery(messageResults.count)
                 }
             })
         }
     }
     
-//    func updateTableViewWithOnlineQuery(){
-//        var onlineQuery = Message.query()
-//        onlineQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
-//        onlineQuery?.countObjectsInBackgroundWithBlock({ (count:Int32, error:NSError?) -> Void in
-//            if Int(count) != self.messages.count{
-//                onlineQuery?.orderByDescending("timeStamp")
-//                onlineQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-//                    if let messageResults = results as? [Message]{
-//                        self.messages = messageResults
-//                        self.tableView.reloadData()
-//                        PFObject.pinAllInBackground(messageResults)
-//                    }
-//                })
-//            }
-//        })
-//    }
+    func updateTableViewWithOnlineQuery(offlineCount:Int){
+        var onlineQuery = Message.query()
+        onlineQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!])
+        onlineQuery?.countObjectsInBackgroundWithBlock({ (count:Int32, error:NSError?) -> Void in
+            if Int(count) != offlineCount{
+                onlineQuery?.orderByDescending("timeStamp")
+                onlineQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+                    if let messageResults = results as? [Message]{
+                        if let messageResults = results as? [Message]{
+                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() in
+                                var partners = [PFUser]()
+                                var updatedConversations = [Message]()
+                                for message in messageResults {
+                                    let otherUser = message.otherUser()
+                                    otherUser.fetch()
+                                    if partners.contains(otherUser) == false{
+                                        partners.append(otherUser)
+                                        updatedConversations.append(message)
+                                    }
+                                }
+                                self.conversations = updatedConversations
+                                PFObject.pinAllInBackground(updatedConversations)
+                                dispatch_async(dispatch_get_main_queue(), {() in
+                                    self.tableView.reloadData()
+                                })
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
 
     // MARK: - Table view data source
 
@@ -111,7 +128,6 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return conversations.count
     }
-
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! IndexCell
@@ -163,7 +179,28 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     }
     */
 
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
     
+    @IBAction func newChat(sender: AnyObject) {
+        self.newChatField.resignFirstResponder()
+        if let userName = newChatField.text{
+            let query = PFUser.query()
+            query!.whereKey("username", equalTo:userName)
+            if let otherUser = query?.getFirstObject() as? PFUser{
+                let chatController = self.storyboard?.instantiateViewControllerWithIdentifier("chat") as? ChatViewController
+                chatController?.otherUser = otherUser
+                self.navigationController?.showViewController(chatController!, sender: self)
+            } else {
+                var alert = UIAlertController(title: "Oh No!", message: "That user doesn't exist!", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+
     // MARK: - Navigation
 
     
@@ -177,7 +214,6 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
         }
     }
     
-
     //MARK: Parse SignUp
     
     func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser){
