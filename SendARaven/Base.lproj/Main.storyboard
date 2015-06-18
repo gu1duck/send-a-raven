@@ -6,34 +6,6 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="placeholder" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BaH-Oq-cko">
-                                <rect key="frame" x="252" y="311" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="centerX" secondItem="BaH-Oq-cko" secondAttribute="centerX" id="hwS-nF-sfN"/>
-                            <constraint firstAttribute="centerY" secondItem="BaH-Oq-cko" secondAttribute="centerY" id="zdg-RH-DUB"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
         <!--Index View Controller-->
         <scene sceneID="cIJ-Co-VcY">
             <objects>
@@ -48,14 +20,14 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aeO-J2-Gia" id="lrk-9O-F6e">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqy-Rd-IYg">
-                                            <rect key="frame" x="8" y="0.0" width="42" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqy-Rd-IYg">
+                                            <rect key="frame" x="8" y="0.0" width="584" height="23.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-Tw-9fp">
-                                            <rect key="frame" x="8" y="22" width="42" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-Tw-9fp">
+                                            <rect key="frame" x="8" y="23" width="584" height="19.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -90,7 +62,7 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="E3M-se-HcL">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="E3M-se-HcL">
                             <connections>
                                 <action selector="newChat:" destination="Iz4-UD-xUM" id="1Th-qG-Fwx"/>
                             </connections>
@@ -176,7 +148,7 @@ It is publicly visible, so it probably shouldn’t be your home. Go there, open 
             </objects>
             <point key="canvasLocation" x="346" y="2034"/>
         </scene>
-        <!--Chat View Controller-->
+        <!--Title-->
         <scene sceneID="rSp-QJ-u6D">
             <objects>
                 <viewController storyboardIdentifier="chat" id="S5F-Qe-c07" customClass="ChatViewController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
@@ -188,8 +160,8 @@ It is publicly visible, so it probably shouldn’t be your home. Go there, open 
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jFJ-cY-04r">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="jFJ-cY-04r">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="messageCell" id="3CV-9p-qVC" customClass="MessageCell" customModule="SendARaven" customModuleProvider="target">
@@ -312,19 +284,67 @@ It is publicly visible, so it probably shouldn’t be your home. Go there, open 
                                     </mask>
                                 </variation>
                             </view>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n4F-ZE-SqA">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="1ym-gk-L6b">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wlg-dT-c4c">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance Unknown" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5xU-Ee-e7D">
+                                                    <rect key="frame" x="0.0" y="4" width="600" height="19.5"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Travel Time Unknown" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtZ-sj-CZt">
+                                                    <rect key="frame" x="0.0" y="20.5" width="600" height="19.5"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.80000001192092896" green="0.80000001192092896" blue="0.80000001192092896" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="5xU-Ee-e7D" firstAttribute="leading" secondItem="wlg-dT-c4c" secondAttribute="leading" id="17P-YD-Nrr"/>
+                                                <constraint firstItem="5xU-Ee-e7D" firstAttribute="top" secondItem="wlg-dT-c4c" secondAttribute="top" constant="4" id="6Pk-SU-COS"/>
+                                                <constraint firstAttribute="bottom" secondItem="FtZ-sj-CZt" secondAttribute="bottom" constant="4" id="9Py-m7-g2H"/>
+                                                <constraint firstItem="FtZ-sj-CZt" firstAttribute="leading" secondItem="wlg-dT-c4c" secondAttribute="leading" id="gjk-Tf-4mG"/>
+                                                <constraint firstAttribute="trailing" secondItem="5xU-Ee-e7D" secondAttribute="trailing" id="niw-xz-wvS"/>
+                                                <constraint firstAttribute="trailing" secondItem="FtZ-sj-CZt" secondAttribute="trailing" id="tn5-Nn-Nnf"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="wlg-dT-c4c" secondAttribute="bottom" id="5O1-eO-8Mr"/>
+                                        <constraint firstItem="wlg-dT-c4c" firstAttribute="top" secondItem="1ym-gk-L6b" secondAttribute="top" id="Hsb-mJ-sdh"/>
+                                        <constraint firstAttribute="trailing" secondItem="wlg-dT-c4c" secondAttribute="trailing" id="Ieg-Yz-TLn"/>
+                                        <constraint firstItem="wlg-dT-c4c" firstAttribute="leading" secondItem="1ym-gk-L6b" secondAttribute="leading" id="Jsc-IQ-2xb"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Kid-y4-dd2"/>
+                                </constraints>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="n4F-ZE-SqA" firstAttribute="leading" secondItem="Lc5-AT-g0V" secondAttribute="leading" id="1gg-ym-eW6"/>
                             <constraint firstAttribute="trailing" secondItem="kuO-oT-Mcr" secondAttribute="trailing" id="2DF-Eu-UvA"/>
                             <constraint firstItem="DFR-Br-kFr" firstAttribute="top" secondItem="jFJ-cY-04r" secondAttribute="bottom" id="6Oe-PR-jmg"/>
                             <constraint firstItem="kuO-oT-Mcr" firstAttribute="leading" secondItem="Lc5-AT-g0V" secondAttribute="leading" id="9Sx-Pf-lF0"/>
                             <constraint firstItem="I2L-Aj-FzA" firstAttribute="bottom" secondItem="kuO-oT-Mcr" secondAttribute="bottom" id="Fcc-DJ-l0h"/>
                             <constraint firstAttribute="trailing" secondItem="I2L-Aj-FzA" secondAttribute="trailing" id="Gyi-Ds-M7Q"/>
                             <constraint firstItem="DFR-Br-kFr" firstAttribute="top" secondItem="kuO-oT-Mcr" secondAttribute="bottom" id="Nxr-TA-oir"/>
+                            <constraint firstItem="n4F-ZE-SqA" firstAttribute="top" secondItem="avY-Zm-LdC" secondAttribute="bottom" id="Q6x-jb-0SM"/>
                             <constraint firstItem="I2L-Aj-FzA" firstAttribute="top" secondItem="kuO-oT-Mcr" secondAttribute="top" id="WD5-x7-93I"/>
                             <constraint firstItem="jFJ-cY-04r" firstAttribute="leading" secondItem="Lc5-AT-g0V" secondAttribute="leading" id="kKt-Bn-7YG"/>
                             <constraint firstAttribute="trailing" secondItem="jFJ-cY-04r" secondAttribute="trailing" id="ogX-vh-85H"/>
                             <constraint firstItem="DFR-Br-kFr" firstAttribute="top" secondItem="I2L-Aj-FzA" secondAttribute="bottom" id="pXg-IA-WyH"/>
+                            <constraint firstAttribute="trailing" secondItem="n4F-ZE-SqA" secondAttribute="trailing" id="pfV-Nh-AlF"/>
                             <constraint firstItem="I2L-Aj-FzA" firstAttribute="leading" secondItem="Lc5-AT-g0V" secondAttribute="leading" id="t2x-04-w7M"/>
                             <constraint firstItem="jFJ-cY-04r" firstAttribute="top" secondItem="avY-Zm-LdC" secondAttribute="bottom" id="z9X-1s-MGf"/>
                         </constraints>
@@ -335,23 +355,27 @@ It is publicly visible, so it probably shouldn’t be your home. Go there, open 
                         </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="Title" id="dFq-xP-zS6"/>
                     <connections>
                         <outlet property="buttonRightMargin" destination="Bmv-So-gUn" id="psc-rc-g6d"/>
+                        <outlet property="distanceLabel" destination="5xU-Ee-e7D" id="Kvh-6U-adp"/>
+                        <outlet property="navBarTitle" destination="dFq-xP-zS6" id="lGG-78-X0p"/>
                         <outlet property="submitButton" destination="jek-wc-ZEl" id="oBo-yb-JIS"/>
                         <outlet property="tableView" destination="jFJ-cY-04r" id="Zqm-o8-Rdz"/>
                         <outlet property="textEntryBottomMargin" destination="pXg-IA-WyH" id="6jg-Zh-Mhh"/>
                         <outlet property="textField" destination="m1C-eO-EgX" id="dxA-x0-ugP"/>
                         <outlet property="textHeight" destination="EHD-XM-GW2" id="qhf-DV-b3Q"/>
+                        <outlet property="timeLabel" destination="FtZ-sj-CZt" id="gw3-vv-w3u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RgK-lv-DW0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1745" y="1013"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Chat Navigation Controller-->
         <scene sceneID="8FP-Pp-s6L">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XJu-nd-4ET" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="XJu-nd-4ET" customClass="ChatNavigationController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="1ag-rp-7CQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

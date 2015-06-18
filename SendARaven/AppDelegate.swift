@@ -40,7 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationBarAppearance = UINavigationBar.appearance();
         navigationBarAppearance.barTintColor = UIColor.raven()
         navigationBarAppearance.tintColor = UIColor.whiteColor()
-        navigationBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()];
+        navigationBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 20)!];
+        
         
 //        let testObject = PFObject(className: "TestObject")
 //        testObject["foo"] = "bar"

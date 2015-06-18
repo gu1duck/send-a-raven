@@ -48,12 +48,15 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         newChatField.delegate  = self
-    
         }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
     }
     
     func updateTableViewLocallyAndRemotely(){

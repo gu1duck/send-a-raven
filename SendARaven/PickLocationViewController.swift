@@ -16,16 +16,15 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
-    var locationManager:CLLocationManager?
+    let locationManager = CLLocationManager()
     var initialLocation = false
     var location:CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager = CLLocationManager()
-        locationManager?.requestAlwaysAuthorization()
-        locationManager?.delegate = self
-        locationManager?.startUpdatingLocation()
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
         mapView.showsUserLocation = true
     }
 
@@ -49,7 +48,7 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate {
                 let circularRegion = CLCircularRegion(center: thisLocation.coordinate, radius: CLLocationDistance(50), identifier: "here")
                 self.zoomMap(thisLocation)
                 initialLocation = true
-                locationManager!.stopUpdatingLocation()
+                locationManager.stopUpdatingLocation()
                 self.updateNeighbourhood(thisLocation)
             }
         }

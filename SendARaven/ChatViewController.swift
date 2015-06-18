@@ -9,18 +9,27 @@
 import UIKit
 import Parse
 
-class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
+class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var textEntryBottomMargin: NSLayoutConstraint!
     @IBOutlet weak var textField: UITextView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buttonRightMargin: NSLayoutConstraint!
-    
     @IBOutlet weak var textHeight: NSLayoutConstraint!
+    @IBOutlet weak var navBarTitle: UINavigationItem!
+    @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    var locationManager = CLLocationManager()
+    var initialLocation = false
+    var location:CLLocation?
+    
     var textViewIsEmpty = true
-    let notificationCenter = NSNotificationCenter.defaultCenter()
     let kTextInputHeight = 56.0
+    let kRavenVelocity:Float = 48280/3600
+    
+    let notificationCenter = NSNotificationCenter.defaultCenter()
     
     var messages = [Message]()
     
@@ -28,23 +37,22 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        otherUser?.fetchIfNeededInBackgroundWithBlock({ (object:PFObject?, error:NSError?) -> Void in
+                self.navBarTitle.title = self.otherUser!.username
+        })
         tableView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.contentInset = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
         
-//        var query = PFUser.query()
-//        query?.whereKey("username", equalTo: "user1")
-//        query?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-//            if let queryUser = results!.first as? PFUser{
-//                self.otherUser = queryUser
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        
         otherUser?.fetchIfNeededInBackgroundWithBlock({ (user:PFObject?, error:NSError?) -> Void in
             self.updateTableViewLocallyAndRemotely()
         })
         
-//            }
-//        })
-       
         //Text input setup
         textField.layer.cornerRadius = 10
         textField.layer.borderColor = UIColor.grayColor().CGColor
@@ -53,17 +61,23 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
 
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(animated: Bool) {
-            super.viewWillAppear(animated)
-            
-            let notificationCenter = NSNotificationCenter.defaultCenter()
-            notificationCenter.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-            notificationCenter.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        super.viewWillAppear(animated)
+        
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "viewWillEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -72,6 +86,12 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         let notificationCenter = NSNotificationCenter.defaultCenter()
         notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+    }
+    
+    func viewWillEnterForeground(notification:NSNotification){
+        initialLocation = false
+        locationManager.startUpdatingLocation()
     }
 
     // MARK: - Table view data source
@@ -109,7 +129,6 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             textField.textColor = UIColor.lightGrayColor()
         }
     }
-
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if textHeight.constant < 86{
@@ -177,7 +196,6 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             },
             completion: nil)
     }
-    
 
     func keyboardWillHide(notification:NSNotification){
         let userInfo = notification.userInfo!
@@ -196,6 +214,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             },
             completion: nil)
     }
+    
+    //MARK: IBActions
     
     @IBAction func submitMessage(sender: AnyObject) {
         textField.editable = false
@@ -217,6 +237,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 50;
     }
+    
+    //MARK: Network methods
     
     func updateTableViewLocallyAndRemotely(){
         var localQuery = Message.query()
@@ -248,46 +270,45 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             }
         })
     }
+    
+    //MARK: Location Manger Delegate
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        if let thisLocation = locations.first as? CLLocation{
+            if initialLocation == false {
+                location = thisLocation
+                initialLocation = true
+                locationManager.stopUpdatingLocation()
+                otherUser?.fetchIfNeededInBackgroundWithBlock({ (object:PFObject?, error:NSError?) -> Void in
+                    let otherGeoPoint = self.otherUser!["location"] as! PFGeoPoint
+                    let otherLocation = CLLocation(latitude: otherGeoPoint.latitude, longitude: otherGeoPoint.longitude)
+                    let distance = self.location?.distanceFromLocation(otherLocation)
+                    let time = Float(distance!) / self.kRavenVelocity
+                    if distance > 1000{
+                        let kilometers = NSString(format: "%0.01f", (distance!/1000))
+                        self.distanceLabel.text = "Distance: \(kilometers) kilometers"
+                    } else {
+                        let meters = NSString(format: "%0.00f", (distance!))
+                        self.distanceLabel.text = "Distance: \(meters) meters"
+                    }
+                    if time > 360{
+                        let hours = NSString(format: "%0.00f", (time/3600))
+                        let minutes = NSString(format: "%0.00f", (time%3600)/60)
+                        self.timeLabel.text = "Messages should arrive in about \(hours) hr, \(minutes) min"
+                    } else {
+                        let minutes = NSString(format: "%0.00f", time/60)
+                        self.timeLabel.text = "Messages should arrive in about \(minutes) min"
+                    }
+                })
+            }
+        }
+    }
 }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
-    /*
+
+
+
     // MARK: - Navigation
-    
+   /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     // Get the new view controller using [segue destinationViewController].
