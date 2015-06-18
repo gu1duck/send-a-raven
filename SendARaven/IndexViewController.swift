@@ -110,7 +110,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                                     }
                                 }
                                 self.conversations = updatedConversations
-                                PFObject.pinAllInBackground(updatedConversations)
+                                Message.pinAllInBackground(self.conversations)
                                 dispatch_async(dispatch_get_main_queue(), {() in
                                     self.tableView.reloadData()
                                 })

@@ -30,6 +30,7 @@ class Message: PFObject, PFSubclassing {
     @NSManaged var postContent: String
     @NSManaged var timeStamp: NSDate
     @NSManaged var postUsers: [PFUser]
+    @NSManaged var arrivalTime: NSDate
  
     func otherUser () -> PFUser{
         if let user = PFUser.currentUser(){

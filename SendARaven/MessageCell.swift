@@ -18,6 +18,9 @@ class MessageCell: UITableViewCell {
     
     var extraConstraint: NSLayoutConstraint?
     
+    var dateFormatter:NSDateFormatter?
+    var dateComponentsFormatter:NSDateComponentsFormatter?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -31,12 +34,29 @@ class MessageCell: UITableViewCell {
     
     func setupWithMessage(message: Message){
         self.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-
         
-        let dateFormatter = NSDateFormatter()
-        //timeStampLabel.text = dateFormatter.stringFromDate(message.timeStamp)
+        
+        
+        
+        
         contentLabel.text = message.postContent
         contentContainer.layer.cornerRadius = 15
+        if self.dateFormatter == nil{
+            dateFormatter = NSDateFormatter()
+            dateFormatter!.timeStyle = NSDateFormatterStyle.NoStyle
+            dateFormatter!.dateFormat = "MMM d, h:mm a"
+        }
+        
+        if message.arrivalTime.timeIntervalSinceNow > 0.0 {
+            let arrivalString = self.dateFormatter!.stringFromDate(message.arrivalTime)
+            timeStampLabel.text = "Will be delivered around \(arrivalString)"
+            self.contentContainer.alpha = 0.5
+        } else {
+            
+            timeStampLabel.text = self.dateFormatter!.stringFromDate(message.timeStamp)
+            self.contentContainer.alpha = 1.0
+        }
+            
         
         contentView.addConstraint(NSLayoutConstraint(
             item: contentContainer,
@@ -52,7 +72,7 @@ class MessageCell: UITableViewCell {
         }
         
         if message.postUsers.first == PFUser.currentUser(){
-            contentContainer.backgroundColor = UIColor.purpleColor()
+            contentContainer.backgroundColor = UIColor.raven()
             
             let rightConstraint = NSLayoutConstraint(
                 item: contentContainer,

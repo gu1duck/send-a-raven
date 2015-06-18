@@ -24,6 +24,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     var locationManager = CLLocationManager()
     var initialLocation = false
     var location:CLLocation?
+    var deliveryTime:NSTimeInterval?
     
     var textViewIsEmpty = true
     let kTextInputHeight = 56.0
@@ -42,8 +43,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         })
         tableView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.contentInset = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
-        tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 0.0, 0.0)
+        tableView.contentInset = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 44.0, 0.0)
+        tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGFloat(kTextInputHeight), 0.0, 44.0, 0.0)
         
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
@@ -224,6 +225,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         message.postContent = textField.text
         message.timeStamp = NSDate()
         message.postUsers = [PFUser.currentUser()!, self.otherUser!]
+        message.arrivalTime = NSDate(timeInterval: self.deliveryTime!, sinceDate: NSDate())
         message.pin()
         message.saveEventually()
         messages = [message] + messages
@@ -283,6 +285,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
                     let otherLocation = CLLocation(latitude: otherGeoPoint.latitude, longitude: otherGeoPoint.longitude)
                     let distance = self.location?.distanceFromLocation(otherLocation)
                     let time = Float(distance!) / self.kRavenVelocity
+                    self.deliveryTime = NSTimeInterval(time)
                     if distance > 1000{
                         let kilometers = NSString(format: "%0.01f", (distance!/1000))
                         self.distanceLabel.text = "Distance: \(kilometers) kilometers"
