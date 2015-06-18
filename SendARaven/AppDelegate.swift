@@ -37,6 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 clientKey:clientKey!)
         }
         
+        let navigationBarAppearance = UINavigationBar.appearance();
+        navigationBarAppearance.barTintColor = UIColor.raven()
+        navigationBarAppearance.tintColor = UIColor.whiteColor()
+        navigationBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()];
+        
 //        let testObject = PFObject(className: "TestObject")
 //        testObject["foo"] = "bar"
 //        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in

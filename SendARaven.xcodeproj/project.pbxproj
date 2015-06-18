@@ -27,6 +27,7 @@
 		3F884DE51B2F5BD90016104E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F884DE41B2F5BD90016104E /* libsqlite3.dylib */; };
 		3F884DE71B2F61B50016104E /* parseKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F884DE61B2F61B50016104E /* parseKeys.plist */; };
 		3FC5EB881B31F0FF003D2469 /* IndexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB871B31F0FE003D2469 /* IndexCell.swift */; };
+		3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB891B326511003D2469 /* Color+RavenExtension.swift */; };
 		3FE15C061B2B8C46008E84FB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE15C051B2B8C46008E84FB /* AppDelegate.swift */; };
 		3FE15C0B1B2B8C46008E84FB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C091B2B8C46008E84FB /* Main.storyboard */; };
 		3FE15C0D1B2B8C46008E84FB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FE15C0C1B2B8C46008E84FB /* Images.xcassets */; };
@@ -74,6 +75,7 @@
 		3F884DE41B2F5BD90016104E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3F884DE61B2F61B50016104E /* parseKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = parseKeys.plist; sourceTree = "<group>"; };
 		3FC5EB871B31F0FE003D2469 /* IndexCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexCell.swift; sourceTree = "<group>"; };
+		3FC5EB891B326511003D2469 /* Color+RavenExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+RavenExtension.swift"; sourceTree = "<group>"; };
 		3FE15C001B2B8C46008E84FB /* SendARaven.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SendARaven.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FE15C041B2B8C46008E84FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FE15C051B2B8C46008E84FB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				3F884DC11B2BC1580016104E /* ChatViewController.swift */,
 				3FE15C0C1B2B8C46008E84FB /* Images.xcassets */,
 				3FE15C091B2B8C46008E84FB /* Main.storyboard */,
+				3FC5EB891B326511003D2469 /* Color+RavenExtension.swift */,
 				3FE15C0E1B2B8C46008E84FB /* LaunchScreen.xib */,
 				3FE15C031B2B8C46008E84FB /* Supporting Files */,
 				3F884DCF1B2F574D0016104E /* Frameworks */,
@@ -329,6 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */,
 				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
 				3FE15C281B2B9319008E84FB /* Message.swift in Sources */,
 				3FFF4C961B2FA12600670ACD /* PickLocationViewController.swift in Sources */,
