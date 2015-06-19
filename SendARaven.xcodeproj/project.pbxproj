@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F69FDF71B33CDFE00D5EE53 /* squack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F69FDF51B33CDFE00D5EE53 /* squack.mp3 */; };
 		3F69FDF81B33CDFE00D5EE53 /* wings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F69FDF61B33CDFE00D5EE53 /* wings.mp3 */; };
+		3F69FDFB1B34B1B400D5EE53 /* ParseIOController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F69FDFA1B34B1B400D5EE53 /* ParseIOController.swift */; };
 		3F884DC21B2BC1580016104E /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F884DC11B2BC1580016104E /* ChatViewController.swift */; };
 		3F884DC91B2F573D0016104E /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F884DC31B2F573D0016104E /* Bolts.framework */; };
 		3F884DCA1B2F573D0016104E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F884DC41B2F573D0016104E /* Parse.framework */; };
@@ -60,6 +61,7 @@
 /* Begin PBXFileReference section */
 		3F69FDF51B33CDFE00D5EE53 /* squack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = squack.mp3; sourceTree = "<group>"; };
 		3F69FDF61B33CDFE00D5EE53 /* wings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wings.mp3; sourceTree = "<group>"; };
+		3F69FDFA1B34B1B400D5EE53 /* ParseIOController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseIOController.swift; sourceTree = "<group>"; };
 		3F884DC11B2BC1580016104E /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		3F884DC31B2F573D0016104E /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		3F884DC41B2F573D0016104E /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				3FC5EB911B3349C6003D2469 /* ChatNavigationController.swift */,
 				3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */,
 				3FE15C051B2B8C46008E84FB /* AppDelegate.swift */,
+				3F69FDFA1B34B1B400D5EE53 /* ParseIOController.swift */,
 				3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */,
 				3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */,
 				3FC5EB871B31F0FE003D2469 /* IndexCell.swift */,
@@ -361,6 +364,7 @@
 				3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */,
 				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
 				3FC5EB921B3349C6003D2469 /* ChatNavigationController.swift in Sources */,
+				3F69FDFB1B34B1B400D5EE53 /* ParseIOController.swift in Sources */,
 				3FE15C281B2B9319008E84FB /* Message.swift in Sources */,
 				3FFF4C961B2FA12600670ACD /* PickLocationViewController.swift in Sources */,
 				3F884DC21B2BC1580016104E /* ChatViewController.swift in Sources */,
