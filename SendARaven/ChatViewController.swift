@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import AVFoundation
 
 class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CLLocationManagerDelegate {
     
@@ -32,6 +33,10 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     
     let notificationCenter = NSNotificationCenter.defaultCenter()
     
+    var wings = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("wings", ofType: "mp3")!)
+    var audioPlayer: AVAudioPlayer?
+    
+    
     var messages = [Message]()
     
     var otherUser: PFUser?
@@ -49,6 +54,9 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
+        
+        audioPlayer = AVAudioPlayer(contentsOfURL: wings, error: nil)
+        audioPlayer!.prepareToPlay()
         
         otherUser?.fetchIfNeededInBackgroundWithBlock({ (user:PFObject?, error:NSError?) -> Void in
             self.updateTableViewLocallyAndRemotely()
@@ -234,6 +242,17 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         self.textField.text = ""
         textField.editable = true
         submitButton.enabled = true
+        audioPlayer!.play()
+        
+        let pushQuery = PFInstallation.query()
+        pushQuery?.whereKey("user", equalTo: self.otherUser!)
+        
+        let push = PFPush()
+        
+        push.setData(["content-available":1])
+        push.setQuery(pushQuery)
+        push.sendPushInBackground()
+        
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -249,7 +268,13 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         localQuery?.orderByDescending("timeStamp")
         localQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
             if let messageResults = results as? [Message]{
-                self.messages = messageResults
+                var itemsToAdd = [Message]()
+                for message in messageResults{
+                    if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
+                        itemsToAdd.append(message)
+                    }
+                }
+                self.messages = itemsToAdd
                 self.tableView.reloadData()
                 self.updateTableViewWithOnlineQuery()
             }
@@ -273,7 +298,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
                         
                         self.messages = itemsToAdd
                         self.tableView.reloadData()
-                        PFObject.pinAllInBackground(itemsToAdd)
+                        PFObject.pinAllInBackground(messageResults)
                     }
                 })
             }

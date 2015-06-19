@@ -30,6 +30,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     override func viewDidAppear(animated: Bool) {
         
         if let user = PFUser.currentUser(){
+            PFInstallation.currentInstallation()["user"] = user
             if user["location"] == nil{
                 if let pickLocation = self.storyboard?.instantiateViewControllerWithIdentifier("locationPicker") as? PickLocationViewController{
                     self.presentViewController(pickLocation, animated: true, completion: nil)
@@ -67,10 +68,16 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
             localQuery?.orderByDescending("timeStamp")
             localQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
                 if let messageResults = results as? [Message]{
+                    var itemsToAdd = [Message]()
+                    for message in messageResults{
+                        if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
+                            itemsToAdd.append(message)
+                        }
+                    }
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() in
                         var partners = [PFUser]()
                         var updatedConversations = [Message]()
-                        for message in messageResults {
+                        for message in itemsToAdd {
                             let otherUser = message.otherUser()
                             otherUser.fetch()
                             if partners.contains(otherUser) == false{
@@ -101,6 +108,12 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                         for message in messageResults{
                             if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
                                 itemsToAdd.append(message)
+                            } else {
+                                let localNotification = UILocalNotification()
+                                localNotification.fireDate = message.arrivalTime
+                                localNotification.alertBody = "A raven has arrived at your rookery!"
+                                localNotification.soundName = "squack.mp3"
+                                UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
                             }
                         }
                         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() in
@@ -115,7 +128,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                                 }
                             }
                             self.conversations = updatedConversations
-                            Message.pinAllInBackground(itemsToAdd)
+                            Message.pinAllInBackground(messageResults)
                             dispatch_async(dispatch_get_main_queue(), {() in
                                 self.tableView.reloadData()
                             })
@@ -225,6 +238,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     
     func signUpViewController(signUpController: PFSignUpViewController, didSignUpUser user: PFUser){
         self.dismissViewControllerAnimated(true, completion: nil)
+        PFInstallation.currentInstallation()["user"] = user
     }
     
     func signUpViewController(signUpController: PFSignUpViewController, didFailToSignUpWithError error: NSError?){
@@ -244,10 +258,12 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     
     func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser){
         self.dismissViewControllerAnimated(true, completion: nil)
+        self.updateTableViewLocallyAndRemotely()
+        PFInstallation.currentInstallation()["user"] = user
+        
     }
     
     func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?){
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func logInViewControllerDidCancelLogIn(logInController: PFLogInViewController){
