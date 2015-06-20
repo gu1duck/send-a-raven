@@ -15,6 +15,7 @@ import Bolts
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let parseController = ParseIOController()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
@@ -47,13 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearance.barTintColor = UIColor.raven()
         navigationBarAppearance.tintColor = UIColor.whiteColor()
         navigationBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: UIFont(name: "Avenir-Medium", size: 20)!];
-        
-        
-//        let testObject = PFObject(className: "TestObject")
-//        testObject["foo"] = "bar"
-//        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-//            println("Object has been saved.")
-//        }
         
         return true
     }
@@ -94,6 +88,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
             println("PUSH RECEIVED!!")
+        if let user = PFUser.currentUser(){
+            parseController.getInforForIndexView([PFUser.currentUser()!], local: true, index: true)
+            parseController.getInforForIndexView([PFUser.currentUser()!], local: false, index: true)
+        }
+        
         //Success
         completionHandler(UIBackgroundFetchResult.NewData);
     }

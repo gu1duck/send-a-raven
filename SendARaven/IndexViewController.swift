@@ -11,17 +11,6 @@ import Parse
 import ParseUI
 import MapKit
 
-extension Array {
-    func contains<T:Equatable>(query:T)->Bool{
-        for object in self {
-            if object as? T == query {
-                return true
-            }
-        }
-        return false
-    }
-}
-
 class IndexViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, ParseIOControllerDelegate {
     
     @IBOutlet weak var newChatField: UITextField!
@@ -32,7 +21,6 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
         super.viewDidLoad()
         newChatField.delegate  = self
         parseController.delegate = self
-        
     }
     
     override func viewDidAppear(animated: Bool) {
