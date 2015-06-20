@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import AVFoundation
 
-class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CLLocationManagerDelegate {
+class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, CLLocationManagerDelegate, ParseIOControllerDelegate {
     
     @IBOutlet weak var textEntryBottomMargin: NSLayoutConstraint!
     @IBOutlet weak var textField: UITextView!
@@ -31,6 +31,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     let kTextInputHeight = 56.0
     let kRavenVelocity:Float = 48280/3600
     
+    let parseController = ParseIOController()
     let notificationCenter = NSNotificationCenter.defaultCenter()
     
     var wings = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("wings", ofType: "mp3")!)
@@ -58,8 +59,11 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         audioPlayer = AVAudioPlayer(contentsOfURL: wings, error: nil)
         audioPlayer!.prepareToPlay()
         
+        parseController.delegate = self
+        
         otherUser?.fetchIfNeededInBackgroundWithBlock({ (user:PFObject?, error:NSError?) -> Void in
-            self.updateTableViewLocallyAndRemotely()
+            self.parseController.getInforForIndexView([PFUser.currentUser()!, self.otherUser!], local: true, index: false)
+            self.parseController.getInforForIndexView([PFUser.currentUser()!, self.otherUser!], local: false, index: false)
         })
         
         //Text input setup
@@ -261,50 +265,11 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     
     //MARK: Network methods
     
-    func updateTableViewLocallyAndRemotely(){
-        var localQuery = Message.query()
-        localQuery?.fromLocalDatastore()
-        localQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
-        localQuery?.orderByDescending("timeStamp")
-        localQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-            if let messageResults = results as? [Message]{
-                var itemsToAdd = [Message]()
-                for message in messageResults{
-                    if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
-                        itemsToAdd.append(message)
-                    }
-                }
-                self.messages = itemsToAdd
-                self.tableView.reloadData()
-                self.updateTableViewWithOnlineQuery()
-            }
-        })
+    func updateData(messages:[Message]){
+        self.messages = messages
+        tableView.reloadData()
     }
-    
-    func updateTableViewWithOnlineQuery(){
-        var onlineQuery = Message.query()
-        onlineQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!, self.otherUser!])
-        onlineQuery?.countObjectsInBackgroundWithBlock({ (count:Int32, error:NSError?) -> Void in
-            if Int(count) != self.messages.count{
-                onlineQuery?.orderByDescending("timeStamp")
-                onlineQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-                    if let messageResults = results as? [Message]{
-                        var itemsToAdd = [Message]()
-                        for message in messageResults{
-                            if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
-                                itemsToAdd.append(message)
-                            }
-                        }
-                        
-                        self.messages = itemsToAdd
-                        self.tableView.reloadData()
-                        PFObject.pinAllInBackground(messageResults)
-                    }
-                })
-            }
-        })
-    }
-    
+        
     //MARK: Location Manger Delegate
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         if let thisLocation = locations.first as? CLLocation{

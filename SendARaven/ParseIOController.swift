@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 protocol ParseIOControllerDelegate {
-    func updateUIWithData([Message])
+    func updateData(messages:[Message])
 }
 
 class ParseIOController: NSObject {
@@ -46,7 +46,7 @@ class ParseIOController: NSObject {
                                     if !local{
                                         Message.pinAllInBackground(messageResults)
                                     }
-                                    self.delegate?.updateUIWithData(filteredResults)
+                                    self.delegate?.updateData(filteredResults)
                                 })
                             })
                         }

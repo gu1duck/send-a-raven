@@ -22,10 +22,18 @@ extension Array {
     }
 }
 
-class IndexViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
+class IndexViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, ParseIOControllerDelegate {
     
     @IBOutlet weak var newChatField: UITextField!
     var conversations = [Message]()
+    let parseController = ParseIOController()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        newChatField.delegate  = self
+        parseController.delegate = self
+        
+    }
     
     override func viewDidAppear(animated: Bool) {
         
@@ -36,7 +44,9 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                     self.presentViewController(pickLocation, animated: true, completion: nil)
                 }
             } else {
-                self.updateTableViewLocallyAndRemotely()
+                parseController.getInforForIndexView([user], local: true, index: true)
+                parseController.getInforForIndexView([user], local: false, index: true)
+                self.tableView.reloadData()
             }
         } else {
             var logInController = PFLogInViewController()
@@ -45,11 +55,6 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
             self.presentViewController(logInController, animated:true, completion: nil)
         }
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        newChatField.delegate  = self
-        }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -60,83 +65,9 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
         return UIStatusBarStyle.LightContent
     }
     
-    func updateTableViewLocallyAndRemotely(){
-        if let user = PFUser.currentUser(){
-            var localQuery = Message.query()
-            localQuery?.fromLocalDatastore()
-            localQuery?.whereKey("postUsers", containsAllObjectsInArray: [user])
-            localQuery?.orderByDescending("timeStamp")
-            localQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-                if let messageResults = results as? [Message]{
-                    var itemsToAdd = [Message]()
-                    for message in messageResults{
-                        if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
-                            itemsToAdd.append(message)
-                        }
-                    }
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() in
-                        var partners = [PFUser]()
-                        var updatedConversations = [Message]()
-                        for message in itemsToAdd {
-                            let otherUser = message.otherUser()
-                            otherUser.fetch()
-                            if partners.contains(otherUser) == false{
-                                partners.append(otherUser)
-                                updatedConversations.append(message)
-                            }
-                        }
-                        self.conversations = updatedConversations
-                        dispatch_async(dispatch_get_main_queue(), {() in
-                            self.tableView.reloadData()
-                        })
-                    })
-                    self.updateTableViewWithOnlineQuery(messageResults.count)
-                }
-            })
-        }
-    }
-    
-    func updateTableViewWithOnlineQuery(offlineCount:Int){
-        var onlineQuery = Message.query()
-        onlineQuery?.whereKey("postUsers", containsAllObjectsInArray: [PFUser.currentUser()!])
-        onlineQuery?.countObjectsInBackgroundWithBlock({ (count:Int32, error:NSError?) -> Void in
-            if Int(count) != offlineCount{
-                onlineQuery?.orderByDescending("timeStamp")
-                onlineQuery?.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
-                    if let messageResults = results as? [Message]{
-                        var itemsToAdd = [Message]()
-                        for message in messageResults{
-                            if message.postUsers[0] == PFUser.currentUser() || message.arrivalTime.timeIntervalSinceNow <= 0{
-                                itemsToAdd.append(message)
-                            } else {
-                                let localNotification = UILocalNotification()
-                                localNotification.fireDate = message.arrivalTime
-                                localNotification.alertBody = "A raven has arrived at your rookery!"
-                                localNotification.soundName = "squack.mp3"
-                                UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-                            }
-                        }
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {() in
-                            var partners = [PFUser]()
-                            var updatedConversations = [Message]()
-                            for message in itemsToAdd {
-                                let otherUser = message.otherUser()
-                                otherUser.fetch()
-                                if partners.contains(otherUser) == false{
-                                    partners.append(otherUser)
-                                    updatedConversations.append(message)
-                                }
-                            }
-                            self.conversations = updatedConversations
-                            Message.pinAllInBackground(messageResults)
-                            dispatch_async(dispatch_get_main_queue(), {() in
-                                self.tableView.reloadData()
-                            })
-                        })
-                    }
-                })
-            }
-        })
+    func updateData(messages: [Message]) {
+        conversations = messages
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -258,7 +189,9 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     
     func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser){
         self.dismissViewControllerAnimated(true, completion: nil)
-        self.updateTableViewLocallyAndRemotely()
+        parseController.getInforForIndexView([PFUser.currentUser()!], local: true, index: true)
+        parseController.getInforForIndexView([PFUser.currentUser()!], local: false, index: true)
+        self.tableView.reloadData()
         PFInstallation.currentInstallation()["user"] = user
         
     }
