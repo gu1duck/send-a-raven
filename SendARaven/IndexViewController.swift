@@ -37,10 +37,12 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                 self.tableView.reloadData()
             }
         } else {
-            var logInController = PFLogInViewController()
-            logInController.delegate = self
-            logInController.signUpController?.delegate = self
-            self.presentViewController(logInController, animated:true, completion: nil)
+            
+            var loginController = self.storyboard?.instantiateViewControllerWithIdentifier("loginView") as? LoginViewController
+//            var logInController = PFLogInViewController()
+//            logInController.delegate = self
+//            logInController.signUpController?.delegate = self
+            self.presentViewController(loginController!, animated:true, completion: nil)
         }
     }
 
