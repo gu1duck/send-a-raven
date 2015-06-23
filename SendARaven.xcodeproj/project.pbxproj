@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F3B19471B38DD5D005699E1 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B19461B38DD5D005699E1 /* OnboardingViewController.swift */; };
+		3F3B194B1B3922E3005699E1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B194A1B3922E3005699E1 /* OnboardingView.swift */; };
 		3F69FDF71B33CDFE00D5EE53 /* squack.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F69FDF51B33CDFE00D5EE53 /* squack.mp3 */; };
 		3F69FDF81B33CDFE00D5EE53 /* wings.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3F69FDF61B33CDFE00D5EE53 /* wings.mp3 */; };
 		3F69FDFB1B34B1B400D5EE53 /* ParseIOController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F69FDFA1B34B1B400D5EE53 /* ParseIOController.swift */; };
@@ -61,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F3B19461B38DD5D005699E1 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		3F3B194A1B3922E3005699E1 /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		3F69FDF51B33CDFE00D5EE53 /* squack.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = squack.mp3; sourceTree = "<group>"; };
 		3F69FDF61B33CDFE00D5EE53 /* wings.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = wings.mp3; sourceTree = "<group>"; };
 		3F69FDFA1B34B1B400D5EE53 /* ParseIOController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseIOController.swift; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 			children = (
 				3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */,
 				3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */,
+				3F3B19461B38DD5D005699E1 /* OnboardingViewController.swift */,
 				3F884DC11B2BC1580016104E /* ChatViewController.swift */,
 				3F69FE2C1B35C44600D5EE53 /* LoginViewController.swift */,
 			);
@@ -217,6 +222,7 @@
 			children = (
 				3F69FE2E1B35C6AD00D5EE53 /* View Controllers */,
 				3FC5EB911B3349C6003D2469 /* ChatNavigationController.swift */,
+				3F3B194A1B3922E3005699E1 /* OnboardingView.swift */,
 				3F69FE2F1B35CCF300D5EE53 /* LoginTextField.swift */,
 				3FE15C2B1B2B9EBF008E84FB /* MessageCell.swift */,
 				3FE15C051B2B8C46008E84FB /* AppDelegate.swift */,
@@ -375,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F3B19471B38DD5D005699E1 /* OnboardingViewController.swift in Sources */,
 				3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */,
 				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
 				3FC5EB921B3349C6003D2469 /* ChatNavigationController.swift in Sources */,
@@ -387,6 +394,7 @@
 				3FC5EB881B31F0FF003D2469 /* IndexCell.swift in Sources */,
 				3FFF4C901B2F818A00670ACD /* IndexViewController.swift in Sources */,
 				3F69FE2D1B35C44600D5EE53 /* LoginViewController.swift in Sources */,
+				3F3B194B1B3922E3005699E1 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

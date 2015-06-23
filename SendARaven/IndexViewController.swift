@@ -38,11 +38,10 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
             }
         } else {
             
-            var loginController = self.storyboard?.instantiateViewControllerWithIdentifier("loginView") as? LoginViewController
-//            var logInController = PFLogInViewController()
-//            logInController.delegate = self
-//            logInController.signUpController?.delegate = self
-            self.presentViewController(loginController!, animated:true, completion: nil)
+            let onboardingController = OnboardingViewController()
+            self.presentViewController(onboardingController, animated: true, completion: nil)
+//            var loginController = self.storyboard?.instantiateViewControllerWithIdentifier("loginView") as? LoginViewController
+//            self.presentViewController(loginController!, animated:true, completion: nil)
         }
     }
 
