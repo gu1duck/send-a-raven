@@ -13,6 +13,7 @@ class OnboardingView: UIView {
     var headerContainer: UILabel?
     var contentContainer: UILabel?
     var imageContainer: UIImageView?
+    var contentView: UIView?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,6 +72,7 @@ class OnboardingView: UIView {
         contentView.layer.shadowOpacity = 0.2
         contentView.layer.shadowRadius = 5.0
         contentView.layer.masksToBounds = true
+        self.contentView = contentView
         
         blur.addConstraint(NSLayoutConstraint(item: contentView,
             attribute: NSLayoutAttribute.Width,

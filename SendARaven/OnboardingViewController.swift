@@ -7,11 +7,28 @@
 //
 
 import UIKit
+import MapKit
+import Parse
 
-class OnboardingViewController: UIViewController, UIScrollViewDelegate {
+class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate {
+    
+//    weak var mapView: MKMapView?
+    
+    let locationManager = CLLocationManager()
+//    var initialLocation = false
+//    var location:CLLocation?
+//    var locationLabel: UILabel?
+    
+    var scrollView: UIScrollView?
 
     override func viewDidLoad() {
+        if let user = PFUser.currentUser(){
+            user["onboarded"] = true
+            user.saveInBackground()
+        }
         super.viewDidLoad()
+        locationManager.delegate = self
+        //locationManager.startUpdatingLocation()
         
         let blur = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Dark))
         view.addSubview(blur)
@@ -55,6 +72,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
         scrollView.pagingEnabled = true
         blur.addSubview(scrollView)
         scrollView.delegate = self
+        self.scrollView = scrollView
         
         blur.addConstraint(NSLayoutConstraint(item: scrollView,
             attribute: NSLayoutAttribute.Top,
@@ -89,8 +107,9 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             constant: 0))
         
         let bodyView = OnboardingView(frame: CGRectZero)
-        bodyView.headerContainer?.text = "Create a Rookery"
-        bodyView.contentContainer?.text = "In order to use the app, you'll need to set up a rookery wher you can receive ravens. This requires that you enable location services on the next card."
+        bodyView.imageContainer?.image = UIImage(named: "raven-flight")
+        bodyView.headerContainer?.text = "Prepare for Ravens"
+        bodyView.contentContainer?.text = "Send-A-Raven delivers images at the speed of actual ravens. If you enable push notifications when prompted, you will be informed when they arrive."
         
         scrollView.addSubview(bodyView)
         bodyView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -128,57 +147,176 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate {
             multiplier: 1.0,
             constant: 0))
         
-        let bodyView2 = UIView(frame: view.bounds)
-        scrollView.addSubview(bodyView2)
-        bodyView2.setTranslatesAutoresizingMaskIntoConstraints(false)
-        bodyView2.backgroundColor = UIColor.blueColor()
+        let bodyView2 = OnboardingView(frame: CGRectZero)
+        placeView(bodyView2, toRightOf: bodyView)
+        bodyView2.imageContainer?.image = UIImage(named: "map")
+        bodyView2.headerContainer?.text = "Location Services"
+        bodyView2.contentContainer?.text = "To calculate delivery speeds, the app needs to know your location. To use the app, Select 'Yes' when prompted. Your present location is never shared."
         
-        scrollView.addConstraint(NSLayoutConstraint(item: bodyView2,
-            attribute: NSLayoutAttribute.Width,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: bodyView,
-            attribute: NSLayoutAttribute.Width,
-            multiplier: 1.0,
-            constant: 0))
+        let bodyView3 = OnboardingView(frame: CGRectZero)
+        placeView(bodyView3, toRightOf: bodyView2)
+        bodyView3.headerContainer?.text = "Place A Rookery"
+        bodyView3.contentContainer?.text = "Messages sent to you will be delivered to a location you declare as your rookery. They will be delivered to you when you go there. Your rookery's location is public, so don't use your home."
         
-        scrollView.addConstraint(NSLayoutConstraint(item: bodyView2,
-            attribute: NSLayoutAttribute.Height,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: bodyView,
-            attribute: NSLayoutAttribute.Height,
-            multiplier: 1.0,
-            constant: 0))
+        let endCap = UIView(frame: CGRectZero)
+        placeView(endCap, toRightOf: bodyView3)
         
-        scrollView.addConstraint(NSLayoutConstraint(item: bodyView2,
-            attribute: NSLayoutAttribute.Left,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: bodyView,
-            attribute: NSLayoutAttribute.Right,
-            multiplier: 1.0,
-            constant: 0))
-        
-        scrollView.addConstraint(NSLayoutConstraint(item: bodyView2,
-            attribute: NSLayoutAttribute.Top,
-            relatedBy: NSLayoutRelation.Equal,
-            toItem: bodyView,
-            attribute: NSLayoutAttribute.Top,
-            multiplier: 1.0,
-            constant: 0))
+//        let bodyView4 = newMapViewToRightOfView(bodyView3)
+//        bodyView4.headerContainer?.text = "Place A Rookery"
+//        bodyView4.contentContainer?.text = "Travel to your rookery and tap Ok to set it."
+//        //bodyView4.locationLabel?.text = "here"
+//        mapView = bodyView4.mapContainer
+//        locationLabel = bodyView4.locationLabel
+//        //mapView!.showsUserLocation = true
 
-        scrollView.addConstraint(NSLayoutConstraint(item: bodyView2,
+        
+        scrollView.addConstraint(NSLayoutConstraint(item: endCap,
             attribute: NSLayoutAttribute.Right,
             relatedBy: NSLayoutRelation.Equal,
             toItem: scrollView,
             attribute: NSLayoutAttribute.Right,
             multiplier: 1.0,
             constant: 0))
-
-
-        
         
 
         // Do any additional setup after loading the view.
     }
+    
+    func placeView(bodyView2: UIView, toRightOf: UIView) {
+        scrollView!.addSubview(bodyView2)
+        bodyView2.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
+        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: toRightOf,
+            attribute: NSLayoutAttribute.Width,
+            multiplier: 1.0,
+            constant: 0))
+        
+        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: toRightOf,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 1.0,
+            constant: 0))
+        
+        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+            attribute: NSLayoutAttribute.Left,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: toRightOf,
+            attribute: NSLayoutAttribute.Right,
+            multiplier: 1.0,
+            constant: 0))
+        
+        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+            attribute: NSLayoutAttribute.Top,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: toRightOf,
+            attribute: NSLayoutAttribute.Top,
+            multiplier: 1.0,
+            constant: 0))
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.x >= self.view.frame.size
+            .width{
+                let userNotificationTypes = (UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound)
+                let userNotificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+                let application = UIApplication .sharedApplication()
+                application.registerUserNotificationSettings(userNotificationSettings)
+                application.registerForRemoteNotifications()
+        }
+        if scrollView.contentOffset.x >= 2 * self.view.frame.size
+            .width{
+                
+                locationManager.requestAlwaysAuthorization()
+        }
+        if scrollView.contentOffset.x >= 11/4 * self.view.frame.size
+            .width{
+                
+                self.dismissViewControllerAnimated(true, completion: nil)
+        }
+
+    }
+    
+//    func newMapViewToRightOfView(bodyView:OnboardingView) -> OnboardingMapView{
+//        let bodyView2 = OnboardingMapView(frame: view.bounds)
+//        scrollView!.addSubview(bodyView2)
+//        bodyView2.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        
+//        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+//            attribute: NSLayoutAttribute.Width,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: bodyView,
+//            attribute: NSLayoutAttribute.Width,
+//            multiplier: 1.0,
+//            constant: 0))
+//        
+//        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+//            attribute: NSLayoutAttribute.Height,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: bodyView,
+//            attribute: NSLayoutAttribute.Height,
+//            multiplier: 1.0,
+//            constant: 0))
+//        
+//        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+//            attribute: NSLayoutAttribute.Left,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: bodyView,
+//            attribute: NSLayoutAttribute.Right,
+//            multiplier: 1.0,
+//            constant: 0))
+//        
+//        scrollView!.addConstraint(NSLayoutConstraint(item: bodyView2,
+//            attribute: NSLayoutAttribute.Top,
+//            relatedBy: NSLayoutRelation.Equal,
+//            toItem: bodyView,
+//            attribute: NSLayoutAttribute.Top,
+//            multiplier: 1.0,
+//            constant: 0))
+//        
+//        return bodyView2
+//        
+//    }
+    
+//    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+//        if let thisLocation = locations.first as? CLLocation{
+//            if initialLocation == false && mapView != nil {
+//                location = thisLocation
+//                let circularRegion = CLCircularRegion(center: thisLocation.coordinate, radius: CLLocationDistance(50), identifier: "here")
+//                self.zoomMap(thisLocation)
+//                initialLocation = true
+//                locationManager.stopUpdatingLocation()
+//                self.updateNeighbourhood(thisLocation)
+//            }
+//        }
+//    }
+
+//    func zoomMap (thisLocation: CLLocation){
+//        var span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+//        let coordinateRegion = MKCoordinateRegion(center: thisLocation.coordinate, span: span);
+//        mapView?.setRegion(coordinateRegion, animated:true)
+//    }
+//    
+//    func updateNeighbourhood (thisLocation: CLLocation){
+//        let geoCoder = CLGeocoder()
+//        geoCoder.reverseGeocodeLocation(thisLocation, completionHandler: {(placemarks, error) in
+//            if (error != nil) {
+//                println("reverse geodcode fail: \(error.localizedDescription)")
+//            }
+//            let pm = placemarks as! [CLPlacemark]
+//            if let placemark = pm.first {
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.locationLabel!.text = placemark.thoroughfare + ", " + placemark.subLocality
+//                })
+//            }
+//        })
+//    }
+
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

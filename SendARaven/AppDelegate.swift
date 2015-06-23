@@ -19,11 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let userNotificationTypes = (UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound)
-        let userNotificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-        application.registerUserNotificationSettings(userNotificationSettings)
-        application.registerForRemoteNotifications()
-        
         
         // Enable local Parse datastore
         Parse.enableLocalDatastore()

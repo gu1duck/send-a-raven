@@ -28,8 +28,13 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
         if let user = PFUser.currentUser(){
             PFInstallation.currentInstallation()["user"] = user
             if user["location"] == nil{
-                if let pickLocation = self.storyboard?.instantiateViewControllerWithIdentifier("locationPicker") as? PickLocationViewController{
-                    self.presentViewController(pickLocation, animated: true, completion: nil)
+                if user["onboarded"] as? Bool != nil{
+                    if let pickLocation = self.storyboard?.instantiateViewControllerWithIdentifier("locationPicker") as? PickLocationViewController{
+                        self.presentViewController(pickLocation, animated: true, completion: nil)
+                    }
+                } else {
+                    let onboardingController = OnboardingViewController()
+                    self.presentViewController(onboardingController, animated: true, completion: nil)
                 }
             } else {
                 parseController.getInforForIndexView([user], local: true, index: true)
@@ -37,11 +42,8 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                 self.tableView.reloadData()
             }
         } else {
-            
-            let onboardingController = OnboardingViewController()
-            self.presentViewController(onboardingController, animated: true, completion: nil)
-//            var loginController = self.storyboard?.instantiateViewControllerWithIdentifier("loginView") as? LoginViewController
-//            self.presentViewController(loginController!, animated:true, completion: nil)
+            var loginController = self.storyboard?.instantiateViewControllerWithIdentifier("loginView") as? LoginViewController
+            self.presentViewController(loginController!, animated:true, completion: nil)
         }
     }
 
