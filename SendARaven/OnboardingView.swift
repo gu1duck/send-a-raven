@@ -67,10 +67,6 @@ class OnboardingView: UIView {
         contentView.setTranslatesAutoresizingMaskIntoConstraints(false)
         contentView.backgroundColor = UIColor.whiteColor()
         contentView.layer.cornerRadius = 20.0
-        contentView.layer.shadowColor = UIColor.blackColor().CGColor
-        contentView.layer.shadowOffset = CGSize(width: 5.0, height: 5.0)
-        contentView.layer.shadowOpacity = 0.2
-        contentView.layer.shadowRadius = 5.0
         contentView.layer.masksToBounds = true
         self.contentView = contentView
         

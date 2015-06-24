@@ -24,13 +24,13 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rqy-Rd-IYg">
                                             <rect key="frame" x="8" y="0.0" width="584" height="23.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ka-Tw-9fp">
                                             <rect key="frame" x="8" y="23" width="584" height="19.5"/>
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -243,59 +243,107 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="e6J-eI-SWu">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="360"/>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNr-9Z-Lbg">
-                                <rect key="frame" x="16" y="400" width="568" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fade" translatesAutoresizingMaskIntoConstraints="NO" id="QtA-gi-AEB">
+                                <rect key="frame" x="0.0" y="270" width="600" height="90"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="QtA-gi-AEB" secondAttribute="height" multiplier="100:15" id="VBu-pI-0pv"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Place Your Rookery" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IZr-hc-OWO">
+                                <rect key="frame" x="16" y="356" width="568" height="23.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBH-Qo-ELW">
-                                <rect key="frame" x="16" y="308" width="568" height="84"/>
-                                <string key="text">To you need to set up a rookery to use the app. Your rookery is where people will send you messages and where you will need to go to retrieve them.  
-
-It is publicly visible, so it probably shouldn’t be your home. Go there, open this screen and hit OK.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kfQ-Qt-7on">
-                                <rect key="frame" x="230" y="550" width="140" height="30"/>
-                                <state key="normal" title="Ok, use this location"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SGj-TK-PjM">
+                                <rect key="frame" x="534" y="321" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.20392156862745098" green="0.83529411764705885" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="S1w-UK-kg1"/>
+                                    <constraint firstAttribute="width" constant="50" id="qnM-45-sLW"/>
+                                </constraints>
+                                <state key="normal" image="check">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
-                                    <action selector="okButton:" destination="qi0-Vq-o9M" eventType="touchUpInside" id="fro-iO-VgV"/>
+                                    <action selector="okButton:" destination="qi0-Vq-o9M" eventType="touchUpInside" id="Zhh-51-aSa"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kNr-9Z-Lbg">
+                                <rect key="frame" x="16" y="560.5" width="568" height="23.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oBH-Qo-ELW">
+                                <rect key="frame" x="16" y="387" width="568" height="76.5"/>
+                                <string key="text">This is where people will send you messages and where you will need to go to retrieve them. It is publically visible so it probably shouldn’t be your home.
+
+You can move your rookery once per day.</string>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwX-0a-Zfe">
+                                <rect key="frame" x="16" y="321" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.96078431372549022" green="0.35686274509803922" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="OYy-cf-q8y"/>
+                                    <constraint firstAttribute="width" constant="50" id="QSR-fJ-p3f"/>
+                                </constraints>
+                                <state key="normal" image="x">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="back:" destination="qi0-Vq-o9M" eventType="touchUpInside" id="XVe-Pw-nn1"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="e6J-eI-SWu" firstAttribute="height" secondItem="oj3-ae-Eit" secondAttribute="height" multiplier="1/2" id="0Hm-Tg-JdE"/>
+                            <constraint firstItem="e6J-eI-SWu" firstAttribute="height" secondItem="oj3-ae-Eit" secondAttribute="height" multiplier="3/5" id="0Hm-Tg-JdE"/>
                             <constraint firstItem="e6J-eI-SWu" firstAttribute="top" secondItem="oj3-ae-Eit" secondAttribute="topMargin" id="2yv-Lm-Pnu"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oBH-Qo-ELW" secondAttribute="trailing" id="3VG-ks-R6n"/>
+                            <constraint firstItem="dwX-0a-Zfe" firstAttribute="top" secondItem="SGj-TK-PjM" secondAttribute="top" id="4cc-ow-ACS"/>
+                            <constraint firstItem="IZr-hc-OWO" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leadingMargin" id="6Ij-kj-Kbh"/>
                             <constraint firstItem="oBH-Qo-ELW" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leadingMargin" id="7ux-s4-AUI"/>
+                            <constraint firstItem="dwX-0a-Zfe" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leadingMargin" id="CCC-Os-7DO"/>
+                            <constraint firstAttribute="trailing" secondItem="QtA-gi-AEB" secondAttribute="trailing" id="CCg-ZF-QU1"/>
                             <constraint firstAttribute="centerX" secondItem="kNr-9Z-Lbg" secondAttribute="centerX" id="DC2-Pc-bWQ"/>
-                            <constraint firstAttribute="centerX" secondItem="kfQ-Qt-7on" secondAttribute="centerX" id="HKA-7F-LJf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SGj-TK-PjM" secondAttribute="trailing" id="Lea-JJ-gQE"/>
+                            <constraint firstItem="oBH-Qo-ELW" firstAttribute="top" secondItem="IZr-hc-OWO" secondAttribute="bottom" constant="8" id="OpJ-ZY-bQB"/>
+                            <constraint firstAttribute="centerY" secondItem="SGj-TK-PjM" secondAttribute="centerY" multiplier="52/60" id="PQB-Cn-NjE"/>
+                            <constraint firstItem="QtA-gi-AEB" firstAttribute="width" secondItem="oj3-ae-Eit" secondAttribute="width" id="WEF-NG-Be2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kNr-9Z-Lbg" secondAttribute="trailing" id="akn-v0-ymd"/>
+                            <constraint firstItem="QtA-gi-AEB" firstAttribute="bottom" secondItem="e6J-eI-SWu" secondAttribute="bottom" id="cLQ-bg-UYI"/>
                             <constraint firstItem="oBH-Qo-ELW" firstAttribute="top" secondItem="e6J-eI-SWu" secondAttribute="bottom" constant="8" id="gsn-bg-wFV"/>
                             <constraint firstItem="702-Qv-9nz" firstAttribute="top" secondItem="e6J-eI-SWu" secondAttribute="bottom" id="pOy-Mw-etr"/>
                             <constraint firstItem="kNr-9Z-Lbg" firstAttribute="top" secondItem="oBH-Qo-ELW" secondAttribute="bottom" constant="8" id="qkG-cV-nfz"/>
                             <constraint firstAttribute="centerY" secondItem="kNr-9Z-Lbg" secondAttribute="centerY" multiplier="2/3" id="qsM-sn-DXo"/>
                             <constraint firstItem="kNr-9Z-Lbg" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leadingMargin" id="rSq-xT-Y1T"/>
-                            <constraint firstItem="702-Qv-9nz" firstAttribute="top" secondItem="kfQ-Qt-7on" secondAttribute="bottom" constant="20" id="wQe-xs-tAi"/>
+                            <constraint firstItem="702-Qv-9nz" firstAttribute="top" secondItem="kNr-9Z-Lbg" secondAttribute="bottom" constant="16" id="wwz-OF-nj1"/>
+                            <constraint firstItem="QtA-gi-AEB" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leading" id="xeI-Jg-2zj"/>
                             <constraint firstAttribute="trailing" secondItem="e6J-eI-SWu" secondAttribute="trailing" id="xre-mG-jEu"/>
                             <constraint firstItem="e6J-eI-SWu" firstAttribute="leading" secondItem="oj3-ae-Eit" secondAttribute="leading" id="yXc-Dh-C3m"/>
+                            <constraint firstItem="IZr-hc-OWO" firstAttribute="top" secondItem="e6J-eI-SWu" secondAttribute="bottom" constant="-4" id="yet-oZ-2Tq"/>
+                            <constraint firstItem="IZr-hc-OWO" firstAttribute="trailing" secondItem="oj3-ae-Eit" secondAttribute="trailingMargin" id="yt0-BT-Ztv"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="gsn-bg-wFV"/>
+                                <exclude reference="qkG-cV-nfz"/>
                                 <exclude reference="qsM-sn-DXo"/>
                                 <exclude reference="pOy-Mw-etr"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="dwX-0a-Zfe" id="s9N-pG-Emh"/>
                         <outlet property="locationLabel" destination="kNr-9Z-Lbg" id="CZT-eP-5ch"/>
                         <outlet property="mapView" destination="e6J-eI-SWu" id="Cuy-a1-9bM"/>
+                        <outlet property="okButton" destination="SGj-TK-PjM" id="isf-EW-hWZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ine-Fh-06s" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -450,13 +498,13 @@ It is publicly visible, so it probably shouldn’t be your home. Go there, open 
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance Unknown" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5xU-Ee-e7D">
                                                     <rect key="frame" x="0.0" y="4" width="600" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Travel Time Unknown" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FtZ-sj-CZt">
                                                     <rect key="frame" x="0.0" y="20.5" width="600" height="19.5"/>
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -545,4 +593,9 @@ It is publicly visible, so it probably shouldn’t be your home. Go there, open 
             <point key="canvasLocation" x="259" y="1013"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="check" width="402" height="401"/>
+        <image name="fade" width="500" height="75"/>
+        <image name="x" width="402" height="401"/>
+    </resources>
 </document>
