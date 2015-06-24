@@ -83,16 +83,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
             println("PUSH RECEIVED!!")
-        if let user = PFUser.currentUser(){
-            parseController.getInforForIndexView([PFUser.currentUser()!], local: true, index: true)
-            parseController.getInforForIndexView([PFUser.currentUser()!], local: false, index: true)
-        }
+//        var download = application.beginBackgroundTaskWithName("download", expirationHandler: { () -> Void in
+//            println("task expired")
+//            application.endBackgroundTask(download)
+//            download = UIBackgroundTaskInvalid
+
+            if let user = PFUser.currentUser(){
+                if application.applicationState == UIApplicationState.Active {
+                    self.parseController.getInforForIndexView([PFUser.currentUser()!], local: true, index: true)
+                    self.parseController.getInforForIndexView([PFUser.currentUser()!], local: false, index: true)
+                } else {
+                    self.parseController.getInforForIndexViewInForeground([PFUser.currentUser()!], local: true, index: true)
+                    self.parseController.getInforForIndexViewInForeground([PFUser.currentUser()!], local: false, index: true)
+                }
+//                application.endBackgroundTask(download)
+//                 download = UIBackgroundTaskInvalid
+            }
         
         //Success
         completionHandler(UIBackgroundFetchResult.NewData);
+    
     }
-    
-    
 }
 
 

@@ -239,7 +239,16 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         message.postUsers = [PFUser.currentUser()!, self.otherUser!]
         message.arrivalTime = NSDate(timeInterval: self.deliveryTime!, sinceDate: NSDate())
         message.pin()
-        message.saveEventually()
+        message.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
+            let pushQuery = PFInstallation.query()
+            pushQuery?.whereKey("user", equalTo: self.otherUser!)
+            
+            let push = PFPush()
+            
+            push.setData(["content-available":1])
+            push.setQuery(pushQuery)
+            push.sendPushInBackground()
+        }
         messages = [message] + messages
         tableView.reloadData()
         self.textField.resignFirstResponder()
@@ -247,16 +256,6 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         textField.editable = true
         submitButton.enabled = true
         audioPlayer!.play()
-        
-        let pushQuery = PFInstallation.query()
-        pushQuery?.whereKey("user", equalTo: self.otherUser!)
-        
-        let push = PFPush()
-        
-        push.setData(["content-available":1])
-        push.setQuery(pushQuery)
-        push.sendPushInBackground()
-        
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

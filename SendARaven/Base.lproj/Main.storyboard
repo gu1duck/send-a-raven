@@ -89,6 +89,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud" translatesAutoresizingMaskIntoConstraints="NO" id="LG2-E1-jHT">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zr6-p5-opZ" customClass="LoginTextField" customModule="SendARaven" customModuleProvider="target">
                                 <rect key="frame" x="41" y="252" width="518" height="40"/>
                                 <constraints>
@@ -179,8 +182,8 @@
                                     <action selector="loginButton:" destination="kWJ-03-nAd" eventType="touchUpInside" id="Aub-DZ-O90"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send a Raven" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xah-me-SRT">
-                                <rect key="frame" x="222" y="134" width="157" height="33"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send a Raven" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xah-me-SRT">
+                                <rect key="frame" x="222" y="133.5" width="157" height="33"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -195,13 +198,17 @@
                             <constraint firstItem="G93-g7-luZ" firstAttribute="width" secondItem="G93-g7-luZ" secondAttribute="height" id="6bl-b9-WyV"/>
                             <constraint firstItem="r8U-eU-Vgo" firstAttribute="leading" secondItem="HWG-gP-iIA" secondAttribute="leading" constant="41" id="7dL-1F-4bQ"/>
                             <constraint firstItem="l5k-hE-t41" firstAttribute="centerY" secondItem="HWG-gP-iIA" secondAttribute="centerY" multiplier="3/2" constant="24" id="85n-hf-yqV"/>
+                            <constraint firstAttribute="trailing" secondItem="LG2-E1-jHT" secondAttribute="trailing" id="AST-zP-vIr"/>
                             <constraint firstAttribute="trailing" secondItem="3tg-4q-AcQ" secondAttribute="trailing" constant="41" id="Ahj-h7-Ros"/>
+                            <constraint firstItem="LG2-E1-jHT" firstAttribute="leading" secondItem="HWG-gP-iIA" secondAttribute="leading" id="DQ4-1h-2o1"/>
+                            <constraint firstAttribute="height" secondItem="LG2-E1-jHT" secondAttribute="height" multiplier="2/1" id="DcH-05-Bha"/>
                             <constraint firstItem="l5k-hE-t41" firstAttribute="centerX" secondItem="HWG-gP-iIA" secondAttribute="centerX" multiplier="2/3" id="Eqp-6M-anz"/>
                             <constraint firstAttribute="trailing" secondItem="zr6-p5-opZ" secondAttribute="trailing" constant="41" id="HIv-ap-pgX"/>
                             <constraint firstAttribute="centerY" secondItem="Xah-me-SRT" secondAttribute="centerY" multiplier="2" id="O5C-UT-Dzq"/>
                             <constraint firstAttribute="trailing" secondItem="r8U-eU-Vgo" secondAttribute="trailing" constant="41" id="QwK-lI-xhv"/>
                             <constraint firstItem="zr6-p5-opZ" firstAttribute="leading" secondItem="HWG-gP-iIA" secondAttribute="leading" constant="41" id="VeL-ng-RR4"/>
                             <constraint firstAttribute="centerX" secondItem="Xah-me-SRT" secondAttribute="centerX" id="aHR-s6-HwI"/>
+                            <constraint firstItem="LG2-E1-jHT" firstAttribute="top" secondItem="HWG-gP-iIA" secondAttribute="topMargin" id="arW-M8-E6S"/>
                             <constraint firstItem="3tg-4q-AcQ" firstAttribute="leading" secondItem="HWG-gP-iIA" secondAttribute="leading" constant="41" id="g4P-vU-FyT"/>
                             <constraint firstAttribute="centerX" secondItem="zr6-p5-opZ" secondAttribute="centerX" id="hiV-XC-97d"/>
                             <constraint firstItem="3tg-4q-AcQ" firstAttribute="top" secondItem="zr6-p5-opZ" secondAttribute="bottom" constant="16" id="meK-ny-jCY"/>
@@ -224,6 +231,7 @@
                         <outlet property="passwordField" destination="3tg-4q-AcQ" id="iBp-0f-3zC"/>
                         <outlet property="signupButton" destination="l5k-hE-t41" id="PfI-Nz-CG8"/>
                         <outlet property="signupHeight" destination="n7i-V3-3ha" id="rRx-tP-Ea6"/>
+                        <outlet property="titleLabel" destination="Xah-me-SRT" id="awl-16-Wab"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kz0-Qf-WDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -595,6 +603,7 @@ You can move your rookery once per day.</string>
     </scenes>
     <resources>
         <image name="check" width="402" height="401"/>
+        <image name="cloud" width="500" height="333"/>
         <image name="fade" width="500" height="75"/>
         <image name="x" width="402" height="401"/>
     </resources>

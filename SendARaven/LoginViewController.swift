@@ -20,6 +20,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var LoginY: NSLayoutConstraint!
     @IBOutlet weak var signupHeight: NSLayoutConstraint!
     @IBOutlet weak var loginHeight: NSLayoutConstraint!
+    @IBOutlet weak var titleLabel: UILabel!
     
     var signupMode = false
     
@@ -34,6 +35,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         emailField.delegate = self
         passwordField.delegate = self
         confirmPasswordField.delegate = self
+        titleLabel.layer.shadowColor = UIColor.raven().CGColor
+        titleLabel.layer.shadowOffset = CGSizeZero
+        titleLabel.layer.shadowOpacity = 1
+        titleLabel.layer.shadowRadius = 2
     }
     
     @IBAction func signupButton(sender: AnyObject)

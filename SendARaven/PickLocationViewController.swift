@@ -107,8 +107,6 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
         if let thisLocation = locations.first as? CLLocation{
             if initialLocation == false {
                 location = thisLocation
-                let circularRegion = CLCircularRegion(center: thisLocation.coordinate, radius: CLLocationDistance(50), identifier: "rookery")
-                self.circularRegion = circularRegion
                 self.zoomMap(thisLocation)
                 initialLocation = true
                 locationManager.stopUpdatingLocation()

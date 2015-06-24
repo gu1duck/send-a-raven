@@ -23,6 +23,7 @@ class ParseIOController: NSObject {
     }
     
     func getInforForIndexView(targets: [PFUser], local: Bool, index: Bool){
+        println("GETTING DATA")
         if let user = PFUser.currentUser(){
             let query = Message.query()!
             if local{
@@ -34,6 +35,7 @@ class ParseIOController: NSObject {
                     
                     query.orderByDescending("timeStamp")
                     query.findObjectsInBackgroundWithBlock({ (results:[AnyObject]?, error:NSError?) -> Void in
+                        println("fetch completed")
                         if let messageResults = results as? [Message]{
                             
                             var filteredResults = self.filterUnreceivedMessages(messageResults, setTimer: !local)
@@ -41,7 +43,6 @@ class ParseIOController: NSObject {
                                 if index {
                                     filteredResults = self.filterOneMessagePerPartner(filteredResults)
                                 }
-                                
                                 dispatch_async(dispatch_get_main_queue(), {() in
                                     if !local{
                                         Message.pinAllInBackground(messageResults)
@@ -54,6 +55,47 @@ class ParseIOController: NSObject {
                 }
             })
         }
+    }
+    
+    func getInforForIndexViewInForeground(targets: [PFUser], local: Bool, index: Bool){
+        println("GETTING DATA")
+        if let user = PFUser.currentUser(){
+            let query = Message.query()!
+            if local{
+                query.fromLocalDatastore()
+            }
+            query.whereKey("postUsers", containsAllObjectsInArray: targets)
+            let count = query.countObjects()
+            if count != self.messageCount{
+                
+                query.orderByDescending("timeStamp")
+                let results = query.findObjects()
+                println("fetch completed")
+                if let messageResults = results as? [Message]{
+                    
+                    var filteredResults = self.filterUnreceivedMessages(messageResults, setTimer: !local)
+                    if index {
+                        filteredResults = self.filterOneMessagePerPartner(filteredResults)
+                    }
+                    if !local{
+                        Message.pinAllInBackground(messageResults)
+                    }
+                    self.delegate?.updateData(filteredResults)
+                }
+            }
+            //})
+        }
+    }
+
+    
+    func filterMessagesToUser(messages: [Message], user: PFUser) -> [Message] {
+        var filteredMessages = [Message]()
+        for message in messages {
+            if message.postUsers[1] == user{
+                filteredMessages.append(message)
+            }
+        }
+        return filteredMessages
     }
     
     func filterUnreceivedMessages(messages:[Message], setTimer: Bool) -> [Message]{

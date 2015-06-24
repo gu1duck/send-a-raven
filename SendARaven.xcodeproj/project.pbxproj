@@ -34,6 +34,10 @@
 		3F884DE31B2F5BC70016104E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F884DE21B2F5BC60016104E /* libz.dylib */; };
 		3F884DE51B2F5BD90016104E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F884DE41B2F5BD90016104E /* libsqlite3.dylib */; };
 		3F884DE71B2F61B50016104E /* parseKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F884DE61B2F61B50016104E /* parseKeys.plist */; };
+		3F8F3F8C1B3A6745000F4B78 /* LocationMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F3F8B1B3A6745000F4B78 /* LocationMonitor.swift */; };
+		3F8F3F8E1B3B3AD0000F4B78 /* lighthouse.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8F3F8D1B3B3AD0000F4B78 /* lighthouse.gpx */; };
+		3F8F3F901B3B3AE1000F4B78 /* station.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8F3F8F1B3B3AE1000F4B78 /* station.gpx */; };
+		3F8F3F921B3B3F27000F4B78 /* stanleyPark.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8F3F911B3B3F27000F4B78 /* stanleyPark.gpx */; };
 		3FC5EB881B31F0FF003D2469 /* IndexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB871B31F0FE003D2469 /* IndexCell.swift */; };
 		3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB891B326511003D2469 /* Color+RavenExtension.swift */; };
 		3FC5EB921B3349C6003D2469 /* ChatNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB911B3349C6003D2469 /* ChatNavigationController.swift */; };
@@ -91,6 +95,10 @@
 		3F884DE21B2F5BC60016104E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3F884DE41B2F5BD90016104E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3F884DE61B2F61B50016104E /* parseKeys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = parseKeys.plist; sourceTree = "<group>"; };
+		3F8F3F8B1B3A6745000F4B78 /* LocationMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationMonitor.swift; sourceTree = "<group>"; };
+		3F8F3F8D1B3B3AD0000F4B78 /* lighthouse.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lighthouse.gpx; sourceTree = "<group>"; };
+		3F8F3F8F1B3B3AE1000F4B78 /* station.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = station.gpx; sourceTree = "<group>"; };
+		3F8F3F911B3B3F27000F4B78 /* stanleyPark.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = stanleyPark.gpx; sourceTree = "<group>"; };
 		3FC5EB871B31F0FE003D2469 /* IndexCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexCell.swift; sourceTree = "<group>"; };
 		3FC5EB891B326511003D2469 /* Color+RavenExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+RavenExtension.swift"; sourceTree = "<group>"; };
 		3FC5EB911B3349C6003D2469 /* ChatNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatNavigationController.swift; sourceTree = "<group>"; };
@@ -224,6 +232,7 @@
 			children = (
 				3F69FE2E1B35C6AD00D5EE53 /* View Controllers */,
 				3FC5EB911B3349C6003D2469 /* ChatNavigationController.swift */,
+				3F8F3F8B1B3A6745000F4B78 /* LocationMonitor.swift */,
 				3F3B194A1B3922E3005699E1 /* OnboardingView.swift */,
 				3F3B194C1B39F0BD005699E1 /* OnboardingMapView.swift */,
 				3F69FE2F1B35CCF300D5EE53 /* LoginTextField.swift */,
@@ -246,6 +255,9 @@
 		3FE15C031B2B8C46008E84FB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3F8F3F911B3B3F27000F4B78 /* stanleyPark.gpx */,
+				3F8F3F8D1B3B3AD0000F4B78 /* lighthouse.gpx */,
+				3F8F3F8F1B3B3AE1000F4B78 /* station.gpx */,
 				3FFF4C9D1B30DE6400670ACD /* SendARaven-Bridging-Header.h */,
 				3FFF4C9B1B30CF4400670ACD /* vancouver.gpx */,
 				3FFF4C991B2FA3D700670ACD /* victoria.gpx */,
@@ -359,11 +371,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F8F3F8E1B3B3AD0000F4B78 /* lighthouse.gpx in Resources */,
 				3F884DE71B2F61B50016104E /* parseKeys.plist in Resources */,
 				3FE15C0B1B2B8C46008E84FB /* Main.storyboard in Resources */,
 				3FFF4C9A1B2FA3D700670ACD /* victoria.gpx in Resources */,
+				3F8F3F901B3B3AE1000F4B78 /* station.gpx in Resources */,
 				3FFF4C9C1B30CF4400670ACD /* vancouver.gpx in Resources */,
 				3FE15C101B2B8C46008E84FB /* LaunchScreen.xib in Resources */,
+				3F8F3F921B3B3F27000F4B78 /* stanleyPark.gpx in Resources */,
 				3F69FDF71B33CDFE00D5EE53 /* squack.mp3 in Resources */,
 				3FE15C0D1B2B8C46008E84FB /* Images.xcassets in Resources */,
 				3F69FDF81B33CDFE00D5EE53 /* wings.mp3 in Resources */,
@@ -385,6 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F3B19471B38DD5D005699E1 /* OnboardingViewController.swift in Sources */,
+				3F8F3F8C1B3A6745000F4B78 /* LocationMonitor.swift in Sources */,
 				3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */,
 				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
 				3FC5EB921B3349C6003D2469 /* ChatNavigationController.swift in Sources */,
