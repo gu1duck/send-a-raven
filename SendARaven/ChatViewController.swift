@@ -37,6 +37,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     var wings = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("wings", ofType: "mp3")!)
     var audioPlayer: AVAudioPlayer?
     
+    var tapGesture: UITapGestureRecognizer?
+    
     
     var messages = [Message]()
     
@@ -71,6 +73,10 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         textField.layer.borderColor = UIColor.grayColor().CGColor
         textField.layer.borderWidth = 0.5
         submitButton.layer.cornerRadius = submitButton.frame.size.width/2
+        submitButton.layer.masksToBounds = true
+        textViewIsEmpty = true
+        buttonRightMargin.constant = -33
+        view.layoutIfNeeded()
 
     }
     
@@ -151,47 +157,30 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     }
     
     func textViewDidChange(textView: UITextView) {
-        if textField.text != "" && textViewIsEmpty == true{
-            textViewIsEmpty = false
-            buttonRightMargin.constant = 8
-            UIView.animateWithDuration(
-                0.2,
-                delay: 0.0,
-                options: UIViewAnimationOptions.CurveEaseInOut,
-                animations: {self.view.layoutIfNeeded()},
-                completion: nil)
-        }
-        
-        if textField.text == "" && textViewIsEmpty == false{
-            textViewIsEmpty = true
-            buttonRightMargin.constant = -33
-            UIView.animateWithDuration(
-                0.2,
-                delay: 0.0,
-                options: UIViewAnimationOptions.CurveEaseInOut,
-                animations: {self.view.layoutIfNeeded()},
-                completion: nil)
-        }
-        
-        let sizeBefore = textField.frame.size.height
-        var sizeThatShouldFitTheContent: CGSize = textField.sizeThatFits(textField.frame.size)
-        let desiredHeight = Float(sizeThatShouldFitTheContent.height)
-        if (desiredHeight < 109){
-            textHeight.constant = sizeThatShouldFitTheContent.height
-            var fixedWidth: CGFloat = textField.frame.size.width
-            var size:CGSize = CGSize(width: fixedWidth,height: CGFloat.max)
-            var newSize: CGSize = textField.sizeThatFits(CGSizeMake(fixedWidth, CGFloat.max))
-            var newFrame: CGRect = textField.frame
-            newFrame.size = CGSizeMake(CGFloat(fmaxf(Float(newSize.width), Float(fixedWidth))), newSize.height)
-            textField.frame = newFrame
-        }
-        textField.scrollEnabled = true
+        setButton()
+        sizeTextField()
+//        let sizeBefore = textField.frame.size.height
+//        var sizeThatShouldFitTheContent: CGSize = textField.sizeThatFits(textField.frame.size)
+//        let desiredHeight = Float(sizeThatShouldFitTheContent.height)
+//        if (desiredHeight < 109){
+//            textHeight.constant = sizeThatShouldFitTheContent.height
+//            var fixedWidth: CGFloat = textField.frame.size.width
+//            var size:CGSize = CGSize(width: fixedWidth,height: CGFloat.max)
+//            var newSize: CGSize = textField.sizeThatFits(CGSizeMake(fixedWidth, CGFloat.max))
+//            var newFrame: CGRect = textField.frame
+//            newFrame.size = CGSizeMake(CGFloat(fmaxf(Float(newSize.width), Float(fixedWidth))), newSize.height)
+//            textField.frame = newFrame
+//        }
+//        textField.scrollEnabled = true
         
     }
     
     //MARK: Keyboard notification methods
 
     func keyboardWillShow(notification: NSNotification) {
+        tapGesture = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
+        view.addGestureRecognizer(tapGesture!)
+        
         let userInfo = notification.userInfo!
         let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
         self.textEntryBottomMargin.constant = keyboardHeight
@@ -211,6 +200,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     }
 
     func keyboardWillHide(notification:NSNotification){
+        view.removeGestureRecognizer(tapGesture!)
+        
         let userInfo = notification.userInfo!
         let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
         self.textEntryBottomMargin.constant = 0
@@ -231,6 +222,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     //MARK: IBActions
     
     @IBAction func submitMessage(sender: AnyObject) {
+        
         textField.editable = false
         submitButton.enabled = false
         let message = Message()
@@ -250,12 +242,19 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             push.sendPushInBackground()
         }
         messages = [message] + messages
-        tableView.reloadData()
         self.textField.resignFirstResponder()
         self.textField.text = ""
+        setButton()
+        tableView.reloadData()
         textField.editable = true
         submitButton.enabled = true
         audioPlayer!.play()
+        
+        //textField.frame.size.height = 40
+        textField.text = "Send a message"
+        textField.textColor = UIColor.lightGrayColor()
+        sizeTextField()
+        
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -301,7 +300,58 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             }
         }
     }
+    
+    func setButton(){
+        if textField.text != "" && textViewIsEmpty == true{
+            textViewIsEmpty = false
+            buttonRightMargin.constant = 8
+            UIView.animateWithDuration(
+                0.2,
+                delay: 0.0,
+                options: UIViewAnimationOptions.CurveEaseInOut,
+                animations: {self.view.layoutIfNeeded()},
+                completion: nil)
+        }
+        
+        if textField.text == "" && textViewIsEmpty == false{
+            textViewIsEmpty = true
+            buttonRightMargin.constant = -33
+            UIView.animateWithDuration(
+                0.2,
+                delay: 0.0,
+                options: UIViewAnimationOptions.CurveEaseInOut,
+                animations: {self.view.layoutIfNeeded()},
+                completion: nil)
+        }
+
+    }
+    
+    func sizeTextField(){
+        let sizeBefore = textField.frame.size.height
+        var sizeThatShouldFitTheContent: CGSize = textField.sizeThatFits(textField.frame.size)
+        let desiredHeight = Float(sizeThatShouldFitTheContent.height)
+        if (desiredHeight < 109){
+            textHeight.constant = sizeThatShouldFitTheContent.height
+            var fixedWidth: CGFloat = textField.frame.size.width
+            var size:CGSize = CGSize(width: fixedWidth,height: CGFloat.max)
+            var newSize: CGSize = textField.sizeThatFits(CGSizeMake(fixedWidth, CGFloat.max))
+            var newFrame: CGRect = textField.frame
+            newFrame.size = CGSizeMake(CGFloat(fmaxf(Float(newSize.width), Float(fixedWidth))), newSize.height)
+            textField.frame = newFrame
+        }
+        textField.scrollEnabled = true
+
+    }
+    
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        view.endEditing(false)
+    }
+    
+    func dismissKeyboard(tapGesture: UITapGestureRecognizer){
+        view.endEditing(false)
+    }
 }
+
 
 
 
