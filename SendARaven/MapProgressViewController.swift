@@ -29,17 +29,19 @@ class MapProgressViewController: UIViewController, MKMapViewDelegate {
         mapView.layer.cornerRadius = 10
         mapView.layer.masksToBounds = true
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: "dismissMap:")
+        view.addGestureRecognizer(tapGesture)
         
-        sent = NSDate(timeIntervalSince1970: 1435255706)
-        arrival = NSDate(timeIntervalSince1970: 1435262906)
+//        sent = NSDate(timeIntervalSince1970: 1435255706)
+//        arrival = NSDate(timeIntervalSince1970: 1435262906)
         now = NSDate()
         
         let totalTime = arrival.timeIntervalSince1970 - sent.timeIntervalSince1970
         let elapsedTime = now.timeIntervalSince1970 - sent.timeIntervalSince1970
         let progress = elapsedTime / totalTime
         
-        origin = CLLocation(latitude: 49.281930, longitude: -123.107901)
-        destination = CLLocation(latitude: 49.285625, longitude: -123.111291)
+//        origin = CLLocation(latitude: 49.281930, longitude: -123.107901)
+//        destination = CLLocation(latitude: 49.285625, longitude: -123.111291)
         raven = CLLocation(latitude: origin.coordinate.latitude + (destination.coordinate.latitude - origin.coordinate.latitude) * progress, longitude: origin.coordinate.longitude + (destination.coordinate.longitude - origin.coordinate.longitude) * progress)
         
         
@@ -106,9 +108,14 @@ class MapProgressViewController: UIViewController, MKMapViewDelegate {
     }
     
     func zoomMap (thisLocation: CLLocation){
+        //var span = MKCoordinateSpan(latitudeDelta: destination.coordinate.latitude - origin.coordinate.latitude, longitudeDelta: destination.coordinate.longitude - origin.coordinate.longitude)
         var span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let coordinateRegion = MKCoordinateRegion(center: thisLocation.coordinate, span: span);
         mapView.setRegion(coordinateRegion, animated:true)
+    }
+    
+    func dismissMap(sender: UITapGestureRecognizer){
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 
     

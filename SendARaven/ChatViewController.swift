@@ -39,6 +39,8 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     
     var tapGesture: UITapGestureRecognizer?
     
+    var updateTimer: NSTimer?
+    
     
     var messages = [Message]()
     
@@ -98,6 +100,19 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         notificationCenter.addObserver(self, selector: "viewWillEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
         
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        updateTimer = NSTimer.scheduledTimerWithTimeInterval(5,
+            target: self,
+            selector: "updateData",
+            userInfo: nil,
+            repeats: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        updateTimer?.invalidate()
+        updateTimer = nil
+    }
 
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
@@ -106,11 +121,20 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+        
     }
     
     func viewWillEnterForeground(notification:NSNotification){
         initialLocation = false
         locationManager.startUpdatingLocation()
+    }
+    
+    func updateData(){
+        if let user = PFUser.currentUser(){
+            parseController.getInforForIndexView([user], local: true, index: false)
+            parseController.getInforForIndexView([user], local: false, index: false)
+            self.tableView.reloadData()
+        }
     }
 
     // MARK: - Table view data source
@@ -132,6 +156,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         return cell
 
     }
+    
     
     //MARK TextView Methods
     
@@ -230,6 +255,7 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
         message.timeStamp = NSDate()
         message.postUsers = [PFUser.currentUser()!, self.otherUser!]
         message.arrivalTime = NSDate(timeInterval: self.deliveryTime!, sinceDate: NSDate())
+        message.sentLocation = PFGeoPoint(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
         message.pin()
         message.saveInBackgroundWithBlock { (success:Bool, error:NSError?) -> Void in
             let pushQuery = PFInstallation.query()
@@ -323,7 +349,6 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
                 animations: {self.view.layoutIfNeeded()},
                 completion: nil)
         }
-
     }
     
     func sizeTextField(){
@@ -340,7 +365,6 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
             textField.frame = newFrame
         }
         textField.scrollEnabled = true
-
     }
     
     override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
@@ -350,19 +374,51 @@ class ChatViewController: UIViewController,  UITableViewDelegate, UITableViewDat
     func dismissKeyboard(tapGesture: UITapGestureRecognizer){
         view.endEditing(false)
     }
-}
-
-
-
-
 
     // MARK: - Navigation
-   /*
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    }
-    */
     
+//    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        if location != nil{
+//            let tappedMessage = messages[indexPath.row] as Message
+//            if tappedMessage.arrivalTime.timeIntervalSinceNow < 0 {
+//                let map = MapProgressViewController()
+//                map.origin = location
+//                
+//                let otherUserLocation = otherUser!["location"] as? PFGeoPoint
+//                let otherUserCLLocation = CLLocation(latitude: otherUserLocation!.latitude, longitude: otherUserLocation!.longitude)
+//                map.destination = otherUserCLLocation
+//                map.sent = tappedMessage.timeStamp
+//                map.arrival = tappedMessage.arrivalTime
+//                self.showViewController(map, sender: self)
+//            }
+//        }
+//    }
 
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "miniMap"{
+            let map = segue.destinationViewController as? MapProgressViewController
+            let indexPath = tableView.indexPathForSelectedRow()
+            let tappedMessage = messages[indexPath!.row] as Message
+            let otherUserLocation = otherUser!["location"] as? PFGeoPoint
+            let otherUserCLLocation = CLLocation(latitude: otherUserLocation!.latitude, longitude: otherUserLocation!.longitude)
+            
+            map!.origin = location
+            map!.destination = otherUserCLLocation
+            map!.sent = tappedMessage.timeStamp
+            map!.arrival = tappedMessage.arrivalTime
+        }
+    }
+
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if identifier == "miniMap"{
+            let indexPath = tableView.indexPathForSelectedRow()
+            let tappedMessage = messages[indexPath!.row] as Message
+            if tappedMessage.arrivalTime.timeIntervalSinceNow > 0 {
+                return true
+            }
+        }
+        return false
+    }
+
+    
+}

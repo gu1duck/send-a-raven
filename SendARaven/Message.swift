@@ -32,6 +32,7 @@ class Message: PFObject, PFSubclassing {
     @NSManaged var postUsers: [PFUser]
     @NSManaged var arrivalTime: NSDate
     @NSManaged var pickedUp: Bool
+    @NSManaged var sentLocation: PFGeoPoint
  
     func otherUser () -> PFUser{
         if let user = PFUser.currentUser(){

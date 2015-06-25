@@ -16,6 +16,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     @IBOutlet weak var newChatField: UITextField!
     var conversations = [Message]()
     let parseController = ParseIOController()
+    var updateTimer: NSTimer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +41,28 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                 parseController.getInforForIndexView([user], local: true, index: true)
                 parseController.getInforForIndexView([user], local: false, index: true)
                 self.tableView.reloadData()
+                updateTimer = NSTimer.scheduledTimerWithTimeInterval(5,
+                    target: self,
+                    selector: "updateData",
+                    userInfo: nil,
+                    repeats: true)
             }
         } else {
             var loginController = self.storyboard?.instantiateViewControllerWithIdentifier("loginView") as? LoginViewController
             self.presentViewController(loginController!, animated:true, completion: nil)
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        updateTimer?.invalidate()
+        updateTimer = nil
+    }
+    
+    func updateData(){
+        if let user = PFUser.currentUser(){
+            parseController.getInforForIndexView([user], local: true, index: true)
+            parseController.getInforForIndexView([user], local: false, index: true)
+            self.tableView.reloadData()
         }
     }
 
@@ -198,7 +217,15 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
             if let pickLocation = self.storyboard?.instantiateViewControllerWithIdentifier("locationPicker") as? PickLocationViewController{
                 self.presentViewController(pickLocation, animated: true, completion: nil)
+            } else {
+                self.updateData()
+                self.updateTimer = NSTimer.scheduledTimerWithTimeInterval(5,
+                    target: self,
+                    selector: "updateData",
+                    userInfo: nil,
+                    repeats: true)
             }
+            
         })
     }
 }
