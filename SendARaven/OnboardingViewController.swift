@@ -10,6 +10,10 @@ import UIKit
 import MapKit
 import Parse
 
+protocol OnboardingViewControllerDelegate {
+    func onboardingViewControllerDismissed(controller: OnboardingViewController)
+}
+
 class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocationManagerDelegate {
     
 //    weak var mapView: MKMapView?
@@ -18,6 +22,8 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
 //    var initialLocation = false
 //    var location:CLLocation?
 //    var locationLabel: UILabel?
+    
+    var delegate: OnboardingViewControllerDelegate?
     
     var scrollView: UIScrollView?
     var pageControl: UIPageControl?
@@ -301,7 +307,8 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
         if scrollView.contentOffset.x >= 11/4 * self.view.frame.size
             .width{
                 
-                self.dismissViewControllerAnimated(true, completion: nil)
+//                self.dismissViewControllerAnimated(true, completion: nil)
+                delegate?.onboardingViewControllerDismissed(self)
         }
 
     }

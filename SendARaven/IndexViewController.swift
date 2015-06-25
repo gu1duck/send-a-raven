@@ -11,7 +11,7 @@ import Parse
 import ParseUI
 import MapKit
 
-class IndexViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, ParseIOControllerDelegate {
+class IndexViewController: UITableViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate, CLLocationManagerDelegate, UITextFieldDelegate, ParseIOControllerDelegate, OnboardingViewControllerDelegate {
     
     @IBOutlet weak var newChatField: UITextField!
     var conversations = [Message]()
@@ -33,6 +33,7 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
                     }
                 } else {
                     let onboardingController = OnboardingViewController()
+                    onboardingController.delegate = self
                     self.presentViewController(onboardingController, animated: true, completion: nil)
                 }
             } else {
@@ -191,5 +192,13 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     
     func logInViewControllerDidCancelLogIn(logInController: PFLogInViewController){
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func onboardingViewControllerDismissed(controller: OnboardingViewController){
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            if let pickLocation = self.storyboard?.instantiateViewControllerWithIdentifier("locationPicker") as? PickLocationViewController{
+                self.presentViewController(pickLocation, animated: true, completion: nil)
+            }
+        })
     }
 }
