@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XJu-nd-4ET">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="2k3-0J-Hew">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -365,6 +365,58 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXx-Wo-GsL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1071" y="1743"/>
+        </scene>
+        <!--Map Progress View Controller-->
+        <scene sceneID="bLu-5c-696">
+            <objects>
+                <viewController id="2k3-0J-Hew" customClass="MapProgressViewController" customModule="SendARaven" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="i9d-KD-mhd"/>
+                        <viewControllerLayoutGuide type="bottom" id="EUc-Ug-Xua"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Kcn-Ck-Cb8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uwx-Kf-rTr">
+                                <rect key="frame" x="0.0" y="4" width="600" height="596"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4YA-PO-5Ae">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="596"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="XLO-Sk-H8A">
+                                            <rect key="frame" x="151" y="149" width="298" height="298"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="XLO-Sk-H8A" secondAttribute="height" multiplier="1:1" id="QdV-do-ggs"/>
+                                            </constraints>
+                                        </mapView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="XLO-Sk-H8A" secondAttribute="centerX" id="CqT-wt-tsy"/>
+                                        <constraint firstAttribute="centerY" secondItem="XLO-Sk-H8A" secondAttribute="centerY" id="ryt-KE-cDF"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="XLO-Sk-H8A" firstAttribute="height" secondItem="uwx-Kf-rTr" secondAttribute="height" multiplier="1/2" id="NKt-LJ-NU7"/>
+                                </constraints>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="uwx-Kf-rTr" firstAttribute="top" secondItem="i9d-KD-mhd" secondAttribute="top" constant="-16" id="KGR-Yr-J6H"/>
+                            <constraint firstItem="uwx-Kf-rTr" firstAttribute="leading" secondItem="Kcn-Ck-Cb8" secondAttribute="leading" id="WeR-3A-3OK"/>
+                            <constraint firstItem="EUc-Ug-Xua" firstAttribute="top" secondItem="uwx-Kf-rTr" secondAttribute="bottom" id="kSp-Tc-dEs"/>
+                            <constraint firstAttribute="trailing" secondItem="uwx-Kf-rTr" secondAttribute="trailing" id="xt2-MF-Yux"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="XLO-Sk-H8A" id="OWQ-zO-Zy4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RQA-A8-3ME" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1779" y="1763"/>
         </scene>
         <!--Pick Location View Controller-->
         <scene sceneID="6FR-2w-6Jj">

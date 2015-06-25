@@ -104,13 +104,8 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "tower")
-//        if annotation.coordinate.latitude == self.mapView.userLocation.coordinate.latitude && if annotation.coordinate.longitude == self.mapView.userLocation.coordinate.longitude{
-//            return nil; //default to blue dot
-//        } else {
             annotationView.image = UIImage(named:"tower")
             annotationView.centerOffset.y -= 25
-        
-//        }
         return annotationView
     }
     
