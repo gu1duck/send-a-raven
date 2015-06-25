@@ -24,7 +24,6 @@ class IndexViewController: UITableViewController, PFLogInViewControllerDelegate,
     }
     
     override func viewDidAppear(animated: Bool) {
-        
         if let user = PFUser.currentUser(){
             PFInstallation.currentInstallation()["user"] = user
             if user["location"] == nil{

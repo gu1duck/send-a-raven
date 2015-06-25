@@ -38,7 +38,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
         titleLabel.layer.shadowColor = UIColor.raven().CGColor
         titleLabel.layer.shadowOffset = CGSizeZero
         titleLabel.layer.shadowOpacity = 1
-        titleLabel.layer.shadowRadius = 2
+        titleLabel.layer.shadowRadius = 3
     }
     
     @IBAction func signupButton(sender: AnyObject)

@@ -20,6 +20,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
 //    var locationLabel: UILabel?
     
     var scrollView: UIScrollView?
+    var pageControl: UIPageControl?
 
     override func viewDidLoad() {
         if let user = PFUser.currentUser(){
@@ -72,6 +73,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
         scrollView.pagingEnabled = true
         blur.addSubview(scrollView)
         scrollView.delegate = self
+        scrollView.showsHorizontalScrollIndicator = false
         self.scrollView = scrollView
         
         blur.addConstraint(NSLayoutConstraint(item: scrollView,
@@ -179,7 +181,68 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
             constant: 0))
         
 
-        // Do any additional setup after loading the view.
+        var pageControl = UIPageControl()
+        blur.addSubview(pageControl)
+        
+        //blur.bringSubviewToFront(pageControl)
+        pageControl.setTranslatesAutoresizingMaskIntoConstraints(false)
+        pageControl.numberOfPages = 3;
+        self.pageControl = pageControl;
+        
+        blur.addConstraint(NSLayoutConstraint(item: pageControl,
+            attribute: NSLayoutAttribute.CenterX,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: blur,
+            attribute: NSLayoutAttribute.CenterX,
+            multiplier: 1.0,
+            constant: -10))
+        
+        blur.addConstraint(NSLayoutConstraint(item: pageControl,
+            attribute: NSLayoutAttribute.Bottom,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: blur,
+            attribute: NSLayoutAttribute.BottomMargin,
+            multiplier: 1.0,
+            constant: 0))
+        
+        let closeIndicator = UIImageView(image: UIImage(named: "x"))
+        blur.addSubview(closeIndicator)
+        closeIndicator.setTranslatesAutoresizingMaskIntoConstraints(false)
+        closeIndicator.alpha = 0.2
+        
+        blur.addConstraint(NSLayoutConstraint(item: closeIndicator,
+            attribute: NSLayoutAttribute.CenterY,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: pageControl,
+            attribute: NSLayoutAttribute.CenterY,
+            multiplier: 1.0,
+            constant: 0))
+        
+        blur.addConstraint(NSLayoutConstraint(item: closeIndicator,
+            attribute: NSLayoutAttribute.Left,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: pageControl,
+            attribute: NSLayoutAttribute.Right,
+            multiplier: 1.0,
+            constant: 4))
+        
+        blur.addConstraint(NSLayoutConstraint(item: closeIndicator,
+            attribute: NSLayoutAttribute.Height,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: nil,
+            attribute: NSLayoutAttribute.NotAnAttribute,
+            multiplier: 1.0,
+            constant: 16))
+        
+        blur.addConstraint(NSLayoutConstraint(item: closeIndicator,
+            attribute: NSLayoutAttribute.Width,
+            relatedBy: NSLayoutRelation.Equal,
+            toItem: closeIndicator,
+            attribute: NSLayoutAttribute.Height,
+            multiplier: 1.0,
+            constant: 0))
+
+
     }
     
     func placeView(bodyView2: UIView, toRightOf: UIView) {
@@ -217,7 +280,9 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
             attribute: NSLayoutAttribute.Top,
             multiplier: 1.0,
             constant: 0))
-    }
+        }
+    
+    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.contentOffset.x >= self.view.frame.size
@@ -239,6 +304,13 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
                 self.dismissViewControllerAnimated(true, completion: nil)
         }
 
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        let offset = Double(scrollView.contentOffset.x)
+        let width = Double(view.frame.size.width)
+        let intPage = Int(offset/width)
+        pageControl!.currentPage = intPage
     }
     
 //    func newMapViewToRightOfView(bodyView:OnboardingView) -> OnboardingMapView{
