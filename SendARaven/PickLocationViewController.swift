@@ -24,6 +24,7 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
     var location:CLLocation?
     var annotation:MKAnnotation?
     var circularRegion: CLCircularRegion?
+    var locationString: String?
 
     
     override func viewDidLoad() {
@@ -140,7 +141,8 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
                     if placemark.subLocality != nil{
                         description += placemark.subLocality
                     }
-                     self.locationLabel.text = description
+                    self.locationLabel.text = description
+                    self.locationString = description
                 })
             }
         })
@@ -149,6 +151,7 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
     func assignLocationToCurrentUser(thisLocation: CLLocation){
         let geoPoint = PFGeoPoint(latitude: thisLocation.coordinate.latitude, longitude: thisLocation.coordinate.longitude)
         if let user = PFUser.currentUser(){
+            user["locationString"] = locationString
             user["location"] = geoPoint
             user.saveInBackgroundWithBlock{(success: Bool, error:NSError?) -> Void in
                 self.dismissViewControllerAnimated(true, completion: nil)
