@@ -117,7 +117,7 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
         let bodyView = OnboardingView(frame: CGRectZero)
         bodyView.imageContainer?.image = UIImage(named: "raven-flight")
         bodyView.headerContainer?.text = "Prepare for Ravens"
-        bodyView.contentContainer?.text = "Send-A-Raven delivers images at the speed of actual ravens. If you enable push notifications when prompted, you will be informed when they arrive."
+        bodyView.contentContainer?.text = "Send-A-Raven delivers messages at the speed of actual ravens. If you enable push notifications when prompted, you will be informed when they arrive."
         
         scrollView.addSubview(bodyView)
         bodyView.setTranslatesAutoresizingMaskIntoConstraints(false)
