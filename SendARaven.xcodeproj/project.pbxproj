@@ -38,6 +38,7 @@
 		3F8F3F8E1B3B3AD0000F4B78 /* lighthouse.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8F3F8D1B3B3AD0000F4B78 /* lighthouse.gpx */; };
 		3F8F3F901B3B3AE1000F4B78 /* station.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8F3F8F1B3B3AE1000F4B78 /* station.gpx */; };
 		3F8F3F921B3B3F27000F4B78 /* stanleyPark.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 3F8F3F911B3B3F27000F4B78 /* stanleyPark.gpx */; };
+		3F8F3F941B3BB379000F4B78 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8F3F931B3BB379000F4B78 /* PreferencesViewController.swift */; };
 		3FC5EB881B31F0FF003D2469 /* IndexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB871B31F0FE003D2469 /* IndexCell.swift */; };
 		3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB891B326511003D2469 /* Color+RavenExtension.swift */; };
 		3FC5EB921B3349C6003D2469 /* ChatNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC5EB911B3349C6003D2469 /* ChatNavigationController.swift */; };
@@ -99,6 +100,7 @@
 		3F8F3F8D1B3B3AD0000F4B78 /* lighthouse.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = lighthouse.gpx; sourceTree = "<group>"; };
 		3F8F3F8F1B3B3AE1000F4B78 /* station.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = station.gpx; sourceTree = "<group>"; };
 		3F8F3F911B3B3F27000F4B78 /* stanleyPark.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = stanleyPark.gpx; sourceTree = "<group>"; };
+		3F8F3F931B3BB379000F4B78 /* PreferencesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		3FC5EB871B31F0FE003D2469 /* IndexCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexCell.swift; sourceTree = "<group>"; };
 		3FC5EB891B326511003D2469 /* Color+RavenExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+RavenExtension.swift"; sourceTree = "<group>"; };
 		3FC5EB911B3349C6003D2469 /* ChatNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatNavigationController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		3F69FE2E1B35C6AD00D5EE53 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3F8F3F931B3BB379000F4B78 /* PreferencesViewController.swift */,
 				3FFF4C951B2FA12600670ACD /* PickLocationViewController.swift */,
 				3FFF4C8F1B2F818A00670ACD /* IndexViewController.swift */,
 				3F3B19461B38DD5D005699E1 /* OnboardingViewController.swift */,
@@ -401,6 +404,7 @@
 			files = (
 				3F3B19471B38DD5D005699E1 /* OnboardingViewController.swift in Sources */,
 				3F8F3F8C1B3A6745000F4B78 /* LocationMonitor.swift in Sources */,
+				3F8F3F941B3BB379000F4B78 /* PreferencesViewController.swift in Sources */,
 				3FC5EB8A1B326511003D2469 /* Color+RavenExtension.swift in Sources */,
 				3FE15C2C1B2B9EBF008E84FB /* MessageCell.swift in Sources */,
 				3FC5EB921B3349C6003D2469 /* ChatNavigationController.swift in Sources */,
