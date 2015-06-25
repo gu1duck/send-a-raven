@@ -258,7 +258,7 @@
                         <sections>
                             <tableViewSection id="aVK-a4-q7R">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="qVy-SC-nOS" detailTextLabel="CC5-SB-Dp1" style="IBUITableViewCellStyleValue1" id="moY-Yl-11g">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="qVy-SC-nOS" detailTextLabel="CC5-SB-Dp1" style="IBUITableViewCellStyleValue1" id="moY-Yl-11g">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="moY-Yl-11g" id="pas-NG-vjf">
                                             <autoresizingMask key="autoresizingMask"/>

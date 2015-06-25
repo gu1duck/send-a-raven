@@ -54,6 +54,10 @@ class PreferencesViewController: UITableViewController, UITableViewDelegate, Pic
         cancelButton.backgroundColor = UIColor.ravenRed()
         cancelButton.layer.cornerRadius = cancelButton.frame.size.width/2
         cancelButton.addTarget(self, action: "cancelButtonPressed:", forControlEvents:.TouchUpInside)
+        cancelButton.layer.shadowColor = UIColor.blackColor().CGColor
+        cancelButton.layer.shadowOffset = CGSize(width: 0.0, height: -2.0)
+        cancelButton.layer.shadowOpacity = 0.2
+        cancelButton.layer.shadowRadius = 2.0
         
         let confirmButton = UIButton(frame: CGRectZero)
         headerImage.addSubview(confirmButton)
@@ -63,6 +67,11 @@ class PreferencesViewController: UITableViewController, UITableViewDelegate, Pic
         confirmButton.backgroundColor = UIColor.ravenGreen()
         confirmButton.layer.cornerRadius = cancelButton.frame.size.width/2
         confirmButton.addTarget(self, action: "confirmButtonPressed:", forControlEvents:.TouchUpInside)
+        confirmButton.layer.shadowColor = UIColor.blackColor().CGColor
+        confirmButton.layer.shadowOffset = CGSize(width: 0.0, height: -2.0)
+        confirmButton.layer.shadowOpacity = 0.2
+        confirmButton.layer.shadowRadius = 2.0
+
     }
     
     func cancelButtonPressed(sender: UIButton){
