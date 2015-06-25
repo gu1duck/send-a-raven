@@ -313,6 +313,10 @@ class OnboardingViewController: UIViewController, UIScrollViewDelegate, CLLocati
 
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let offset = Double(scrollView.contentOffset.x)
         let width = Double(view.frame.size.width)

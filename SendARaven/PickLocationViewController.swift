@@ -10,6 +10,10 @@ import UIKit
 import MapKit
 import Parse
 
+protocol PickLocationViewControllerDelegate{
+    func pickLocationViewControllerSaved(controller: PickLocationViewController, locationString: String)
+}
+
 class PickLocationViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var locationLabel: UILabel!
@@ -25,6 +29,7 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
     var annotation:MKAnnotation?
     var circularRegion: CLCircularRegion?
     var locationString: String?
+    var delegate: PickLocationViewControllerDelegate?
 
     
     override func viewDidLoad() {
@@ -37,7 +42,12 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
         if let user = PFUser.currentUser(){
             if let userLocation = user["location"] as? PFGeoPoint{
                 location = CLLocation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = location!.coordinate
+                self.annotation = annotation
                 self.zoomMap(location!)
+                mapView.addAnnotation(annotation)
+                self.updateNeighbourhood(location!)
             } else {
                 locationManager.startUpdatingLocation()
                 mapView.showsUserLocation = true
@@ -62,6 +72,7 @@ class PickLocationViewController: UIViewController, CLLocationManagerDelegate, M
         if let finalRegion = circularRegion {
             locationManager.startMonitoringForRegion(circularRegion)
         }
+        delegate?.pickLocationViewControllerSaved(self, locationString: locationString!)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
