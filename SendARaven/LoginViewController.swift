@@ -43,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate{
     
     @IBAction func signupButton(sender: AnyObject)
     {
-        self.view.endEditing(true)
+        //self.view.endEditing(true)
         if signupMode{
             
             let destination = passwordField.frame

@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class PreferencesViewController: UITableViewController, UITableViewDelegate, PickLocationViewControllerDelegate {
+class PreferencesViewController: UITableViewController, UITableViewDelegate, PickLocationViewControllerDelegate, UITextFieldDelegate{
 
     @IBOutlet var headerImage: UIImageView!
     @IBOutlet weak var rookeryLocation: UILabel!
@@ -19,6 +19,7 @@ class PreferencesViewController: UITableViewController, UITableViewDelegate, Pic
     
     var locationString: String?
     var email: String?
+    var tapGesture: UITapGestureRecognizer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +27,9 @@ class PreferencesViewController: UITableViewController, UITableViewDelegate, Pic
         headerImage.frame.size = headerSize
         headerImage.userInteractionEnabled = true
         setupButtons()
+        emailField.delegate = self
+        newPasswordField.delegate = self
+        confirmPasswordField.delegate = self
         
         if let user = PFUser.currentUser() {
             locationString = user["locationString"] as? String
@@ -36,8 +40,17 @@ class PreferencesViewController: UITableViewController, UITableViewDelegate, Pic
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         rookeryLocation.text = locationString
+        let notificationCenter = NSNotificationCenter.defaultCenter()
+        notificationCenter.addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,6 +109,18 @@ class PreferencesViewController: UITableViewController, UITableViewDelegate, Pic
         }
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        UIView.animateWithDuration(0.2, animations: { () -> Void in
+            self.view.frame = UIScreen.mainScreen().bounds
+        })
+    }
+
+    
     func pickLocationViewControllerSaved(controller: PickLocationViewController, locationString: String) {
         self.locationString = locationString
     }
@@ -110,5 +135,66 @@ class PreferencesViewController: UITableViewController, UITableViewDelegate, Pic
         }
     }
     
+    func keyboardWillShow(notification: NSNotification) {
+        tapGesture = UITapGestureRecognizer(target: self, action: "dismissKeyboard:")
+        view.addGestureRecognizer(tapGesture!)
+        
+        let userInfo = notification.userInfo!
+        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
+        let offset = tableView.contentOffset
+//        
+//        let heightWithKeyboard = self.tableView.frame.height - keyboardHeight
+//        let desiredTextFieldHeight = heightWithKeyboard
+        var offsetSize: CGFloat?
+        if UIScreen.mainScreen().bounds.height >= 568{
+            offsetSize = keyboardHeight/2
+        } else {
+            offsetSize = keyboardHeight * 3/4
+        }
+        
+        
+        UIView.animateWithDuration(
+            0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseInOut,
+            animations: {
+                self.tableView.contentInset = UIEdgeInsetsMake(-offsetSize!, 0.0, 0.0, 0.0)
+                self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(-offsetSize!, 0.0, 0.0, 0.0)
+                self.view.layoutIfNeeded()
+                self.tableView.contentOffset.y = offset.y + offsetSize!
+                
+            },
+            completion: nil)
+    }
     
+    
+    func keyboardWillHide(notification:NSNotification){
+        view.removeGestureRecognizer(tapGesture!)
+        
+        let userInfo = notification.userInfo!
+        let keyboardHeight = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
+        let offset = tableView.contentOffset
+        var offsetSize: CGFloat?
+        if UIScreen.mainScreen().bounds.height >= 568{
+            offsetSize = keyboardHeight/2
+        } else {
+            offsetSize = keyboardHeight * 3/4
+        }
+        UIView.animateWithDuration(
+            0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseInOut,
+            animations: {
+                self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+                self.view.layoutIfNeeded()
+                self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+                self.tableView.contentOffset.y = -offset.y + offsetSize!
+            },
+            completion: nil)
+    }
+    
+    func dismissKeyboard(tapGesture: UITapGestureRecognizer){
+        view.endEditing(false)
+    }
+
 }
